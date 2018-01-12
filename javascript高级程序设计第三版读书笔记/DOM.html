@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+	<p id="op">5656</p>
+	<img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2297223156,1299390734&fm=58&bpow=666&bpoh=403&u_exp_0=2110244052,982623601&fm_exp_0=86" name="imgFirst">
+	<img src="">
+	<img src="">
+	<img src="">
+
+	<input type="" name="inputID">
+	<input type="" name="inputID">
+	<input type="" name="inputID">
+	<input type="" name="inputID">
+
+
+	<div style="background:red;width:50px;height:50px;" id="oDiv" class="divs" title="div title" lang="en" dir="ltr"></div>
+
+
+	<ul id="myList"></ul>
+<script>
+'use strict';
+/**
+ *	DOM
+ *
+ */
+
+ /* 节点层次 */
+
+
+
+// Node类型
+
+// nodeName 和 nodeValue 属性
+
+// 节点关系
+// 将nodeList转换成数组(兼容ie及其他浏览器) 
+function convertToArray(nodes){
+	var array = null;
+	try{
+		array = Array.prototype.slice.call(nodes,0); // 针对非ie浏览器
+	}catch(ex){
+		array = new Array();
+		for(var i=0,len=nodes.length;i<len;i++){
+			array.push(nodes[i]);
+		}
+	}
+	return array;
+}
+
+// 操作节点
+
+// 插入
+// appendChild() 在末尾添加子节点
+// insertBefore(插入的节点，作为参照的节点)
+
+// 移除替换
+// replaceChild(要插入的节点，要替换的节点)
+// removeChild(要移除的节点)
+
+// 其他方法
+// cloneNode() 接受一个布尔值参数 如果是true复制节点及其整个子节点树 false 只复制节点本身
+// normalize() 处理文本节点
+
+
+
+
+// Document类型
+
+// 文档的子节点
+var html = document.documentElement; // 获取<html>的引用
+console.log(html === document.childNodes[1]); // true
+
+var body = document.body; // 获取<body>的引用
+
+var doctupe = document.doctype;	// 获取<!DOCTYPE>的引用
+
+
+// 文档信息
+
+// title
+var originTitle = document.title;
+document.title = 'New page title'
+// url
+var url = document.URL;
+console.log(url);
+// 获取域名
+var domain = document.domain;
+console.log(domain);
+// 获取来源页面的URL
+var referrer = document.referrer;
+console.log(referrer);
+
+
+// 查找元素
+
+// id
+var op = document.getElementById('op');	// 获取p元素的引用
+
+// 标签 tagName
+var tagAll = document.getElementsByTagName('*');
+var oImg = document.getElementsByTagName('img');
+console.log(oImg.length, oImg[0].src);
+// namedItem
+var imgFirst = oImg.namedItem('imgFirst');
+console.log(imgFirst);
+
+// 表单 name
+var inputAll = document.getElementsByName('inputID');
+
+
+// 特殊集合
+// document.anchors
+// document.forms
+// document.images
+// document.links
+
+
+// DOM一致性检测
+
+
+// 文档写入
+// write() :原样写入
+// writeln() :添加一个换行符(\n)	
+// open()
+// close()
+
+
+
+
+// Element类型
+var p1 = document.getElementById('op');
+console.log(p1.tagName);
+console.log(p1.tagName === p1.nodeName);
+
+// html元素
+var oDiv = document.getElementById('oDiv');
+console.log(oDiv.id, oDiv.className, oDiv.title, oDiv.lang, oDiv.dir);
+
+oDiv.id='oDivNew';
+console.log(oDiv.id);
+
+// 取得特性
+// getAttribute()
+console.log(oDiv.getAttribute('id'));
+console.log(oDiv.getAttribute('title'));
+console.log(parseInt(oDiv.style.width));
+
+// 设置特性
+// setAttribute()
+oDiv.setAttribute('id','someOtherId');
+console.log(oDiv.id);
+
+// 删除特性
+oDiv.removeAttribute('id');
+
+
+// attributes 属性
+// 迭代元素的每一个特性的方法
+function outputAttributes(element){
+	var pairs = new Array(),
+		attrName,
+		attrValue,
+		i,
+		len;
+	for(i=0,len=element.attributes.length;i<len;i++){
+		attrName = element.attributes[i].nodeName;
+		attrValue = element.attributes[i].nodeValue;
+		if(element.attributes[i].specified){
+			pairs.push(attrName+"=\""+attrValue+"\"");
+		}
+	}
+	return pairs.join("");
+}
+
+
+// 创建元素
+// document.createElement();
+var oDivs = document.createElement('div');
+oDivs.id='newDivs'; oDivs.className='box'
+console.log(oDivs);
+
+// ie写法
+// document.createElement('<p id="ops" class="box"></p>');
+
+
+// 插入元素
+// appendChild() insertBefore() replaceChild()
+document.body.appendChild(oDivs);
+
+
+// 元素的子节点
+// 遍历子节点
+for(var i=0, len=document.body.childNodes.length;i<len;i++){
+	if(document.body.childNodes[i].nadeType===1){
+		// 执行某些操作
+
+	}
+}
+
+// getElementsByTagName() 获取节点
+var ele = document.body.getElementsByTagName('input');
+console.log(ele);
+
+
+
+
+
+// Text类型
+
+// 1. 创建文本节点
+var t = document.createTextNode('hello');
+console.log(t);
+document.body.appendChild(t);
+
+// 2. 规范化文本节点
+// 合并同一个父元素下的多个文本节点
+var elements = document.createElement('div');
+elements.className = 'message';
+
+var textNode = document.createTextNode('hello world');
+elements.appendChild(textNode);
+
+var anotheTextNode = document.createTextNode('http www');
+elements.appendChild(anotheTextNode);
+
+document.body.appendChild(elements);
+
+console.log( elements.childNodes.length );
+elements.normalize();
+console.log( elements.childNodes.length );
+console.log( elements.firstChild.nodeValue );
+
+// 分割文本节点
+var newNode = elements.firstChild.splitText(5);
+console.log(elements.firstChild.nodeValue);
+console.log(newNode.nodeValue);
+console.log(elements.childNodes.length);
+
+
+
+
+// Comment类型
+// 注释类型
+// nodeType===8
+
+
+
+
+// CDATASection 类型
+// 只针对基于XML的文档，表示的是CDATA区域
+// nodeType===4
+
+
+
+
+// DocumentType类型
+// 不常用
+// nodeType===10
+
+
+
+// DocumentFragment 类型
+// nodeType===11
+// 文档片段
+var fragment = document.createDocumentFragment();
+var ul = document.getElementById('myList');
+var li = null;
+for(var i=0;i<3;i++){
+	li = document.createElement('li');
+	li.appendChild(document.createTextNode('Item'+(i+1)));
+	fragment.appendChild(li);
+}
+ul.appendChild(fragment);
+
+
+
+
+// Attr 类型
+// nodeType===11
+// 不常用
+
+
+
+
+
+
+
+ /* DOM操作技术 */
+
+
+
+// 动态脚本
+// 封装动态脚本加载方法
+function loadScript(url){
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	script.src = url;
+	document.body.appendChild(script);
+}
+// loadScript('client.js');
+
+
+
+
+// 动态样式
+// 封装动态样式加载方法
+function loadStyles(url){
+	var link = document.createElement('link');
+	link.rel = 'stylesheet';
+	link.type = 'text/css';
+	link.href = url;
+	var head = document.getElementsByTagName('head')[0];
+	head.appendChild(link);
+}
+// loadStyles('styles.css');
+
+
+
+
+// 操作表格
+
+
+
+
+// 使用NodeList
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

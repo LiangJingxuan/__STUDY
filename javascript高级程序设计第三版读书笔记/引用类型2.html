@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			// 基本包装类型
+			// Boolean | Number | String
+			
+			
+			// Boolean类型 (永远不要使用)
+			var booleanObject = new Boolean(true);
+			console.log(booleanObject);
+
+			// Number类型 (不建议使用)
+			var numberObject = new Number(10);
+			console.log(numberObject);
+
+			// String类型
+			var strungObject = new String('hello'); 
+			console.log(strungObject);
+			
+			// 1. 字符方法
+			// charAt() charCodeAt()
+			var stringValue='hello';
+			console.log(stringValue.charAt(1));
+			console.log(stringValue.charCodeAt(1));
+			console.log(stringValue[1]);
+
+			// 2. 字符串操作方法
+			var res = stringValue.concat(' world');
+			console.log(res);
+
+			console.log(stringValue.slice(3));
+			console.log(stringValue.substring(3));
+			console.log(stringValue.substr(3));
+
+			// 3. 字符串位置的方法
+			console.log(stringValue.indexOf('e'));
+			console.log(stringValue.lastIndexOf('l'));
+			console.log(stringValue.indexOf('e',2));
+
+			// 4. trim()方法
+
+			// 5. 字符串大小写转换方法
+			console.log(stringValue.toUpperCase());
+			console.log(stringValue.toLowerCase());
+
+
+			// 字符串的模式匹配方法
+			// match(); search();
+			// replace();
+			// split();
+
+
+			// localeCompare()方法
+
+			// fromCharCode()方法 
+
+
+
+
+			// 单体内置对象
+
+			// Global对象 
+			// Math对象
+
+			// 方法
+			// 最大最小值
+			var max = Math.max(2,4,1,5,76,12);
+			var min = Math.min(2,4,1,5,76,12);
+			console.log(max,min);
+
+			var maxArray = [2,4,1,5,76,12];
+			var maxA = Math.max.apply(Math,maxArray);
+			console.log(maxA);
+
+			// 舍入方法
+			console.log(Math.ceil(25.1));	// 向上舍入
+			console.log(Math.round(25.4));	// 四合五入
+			console.log(Math.floor(25.1));	// 向下舍入
+
+			// 随机数方法
+			var colorArray = ['red','green','blue','yellow','black','purple','brown'];
+			var randomNUM = Math.floor(Math.random()*6+0);
+			console.log(colorArray[randomNUM]);
+
+			// 其他方法
+
+
+
+
+
+
+
+
+
+		</script>
+	</body>
+</html>

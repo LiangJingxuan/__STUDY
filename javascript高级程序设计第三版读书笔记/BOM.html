@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+<script>
+'use strict';
+/**
+ *	BOM
+ *
+ */
+
+ /* window对象 */
+
+
+ // 全局作用域
+ var age = 24;
+ function sayAge(){
+ 	console.log(this.age);
+ };
+console.log(window.age);
+// sayAge();
+window.sayAge();
+window.color = 'red';
+// delete window.age;	// false
+delete window.color	// true
+// var newVal = oldVal;	// 抛出错误 oldVal未定义
+var newVal = window.oldVal;	// 不报错 属性查询
+
+
+// 窗口关系及框架
+// window | top | parent | self
+
+
+// 窗口位置
+console.log(window);
+
+// 跨浏览器取得窗口左边和上边的位置
+var leftPos = (typeof window.screenLeft==='number') ? window.screenLeft : window.screenX ;
+console.log(leftPos);
+
+var topPos = (typeof window.screenTop==='number') ? window.screenTop : window.screenY ;
+console.log(topPos);
+
+// 将窗口移动到屏幕左上角
+window.moveTo(0,0);
+// 将窗口向下移动100像素
+window.moveBy(0,100);
+// 将窗口移动到200,300
+window.moveTo(200,300);
+// 将窗口向左移动50像素
+window.moveBy(-50,0);
+
+
+// 窗口大小
+var pageWidth = window.innerWidth,
+	pageHeight = window.innerHeight;
+
+if(typeof pageWidth !=='number'){
+	if(document.compatMode === 'CSSlCompat'){
+		pageWidth = document.documentElement.clientWidth;
+		pageHeight = document.documentElement.clientHeight;
+	}else{
+		pageWidth = document.body.clientWidth;
+		pageHeight = document.body.clientHeight;
+	}
+}
+console.log(pageWidth, pageHeight);
+
+// 调整浏览器窗口的大小
+window.resizeTo(100,100);
+// 调整到200,150
+window.resizeBy(200,150);
+
+
+// 导航和打开窗口
+// window.open('','_blank');
+
+// 弹出窗口
+// window.open('','','heigth=101,width=101,top=10,left=10,resizable=yes');
+
+
+// 安全限制
+
+
+// 弹出窗口
+
+
+// 间歇调用和超时调用 (定时器)
+// 超时调用
+var toutId = setTimeout(function(){
+	// console.log('hello');
+	// 清除超时调用
+	clearTimeout(toutId);
+},1000);
+
+// 间歇调用
+var i = 0;
+var setoutId = setInterval(function(){
+	++i;
+	// console.log(i);
+	if(i===1){
+		// 清除间歇调用
+		clearInterval(setoutId);
+	};
+},1000);
+
+
+// 系统对话框
+// alert();
+/*var returnVal = confirm();
+console.log(returnVal);*/
+/*var returnVal2 = prompt('What`s your name?','');
+console.log(returnVal2);*/
+// window.print();
+// window.find();
+
+
+
+// location 对象
+console.log(window.location);
+
+// 查询字符串参数
+function getQueryStringAtgs(){
+	// 取得查询字符串并去掉开头的问号
+	var qs = (location.search.length > 0 ? 
+		location.search.substring(1) : ''),
+	// 保存数据对象
+	args = {},
+	// 取得每一项
+	items = qs.length ? qs.split('&') : [],
+	item = null, name = null, value = null,
+	// 在for循环中使用
+	i = 0, len = items.length;
+
+	// 逐个将每一项添加到args对象中
+	for(i=0;i<len;i++){
+		item = items[i].split('=');
+		name = decodeURIComponent(item[0]);
+		value = decodeURIComponent(item[1]);
+		if(name.length){
+			args[name] = value;
+		}
+	}
+	return args;
+}
+// 使用实例：假设查询字符串是 ?q=javasecript&num=10
+var args = getQueryStringAtgs();
+console.log(args);
+console.log(args['q']);
+console.log(args['num']);
+
+// 位置操作
+// location.assign('http://www.baidu.com');
+// location.replace('http://www.baidu.com');
+// 重新加载
+// location.reload(); // 从缓存中加载
+// location.reload(true); // 从服务器重新加载
+
+
+
+
+// navigator对象
+console.log(window.navigator);
+
+// 检测插件
+
+// 检测插件函数(在ie中无效)
+function hasPlugin(name){
+	name = name.toLowerCase();
+	for(var i=0;i<navigator.plugins.length;i++){
+		if(navigator.plugins[i].name.toLowerCase().indexOf(name)>-1){
+			return true;
+		}
+	}
+	return false;
+};
+// 使用 :检测Flash
+console.log(hasPlugin('Flash'));
+// 使用 :检测QuickTime
+console.log(hasPlugin('QuickTime'));
+// 使用 :检测Cookie
+console.log(hasPlugin('Cookie'));
+
+// 检测ie中的插件
+function hasIEPlugin(name){
+	try{
+		new ActiveXObject(name);
+		return true;
+	}catch(ex){
+		return false;
+	}
+};
+// 检测Flash
+console.log(hasIEPlugin('ShockwaveFlash.ShockwaveFlash'));
+
+// 检测所有浏览器中的Flase插件方法
+function hasFlash(){
+	var res = hasPlugin('Flash');
+	if(!res){
+		res = hasIEPlugin('ShockwaveFlash.ShockwaveFlash');
+	}
+	return res;
+}
+// 使用
+console.log(hasFlash());
+
+// 注册处理程序
+
+
+
+
+
+// screen 对象
+console.log(window.screen);
+
+
+
+// history 对象
+console.log(window.history);
+// 后退一页
+// history.go(-1);  history.back();
+// 前进一页
+// history.go(1);   history.forward();
+// 前进两页
+// history.go(2);
+// 用户打开窗口后的第一个页面 
+// history.length===0;
+
+
+</script>
+</body>
+</html>

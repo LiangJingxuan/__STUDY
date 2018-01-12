@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+<script>
+'use strict';
+/**
+ *	面向对象的程序设计_理解对象 | 创建对象
+ *
+ */
+
+ // 理解对象
+ // 属性类型
+
+ // 数据属性
+ // 修改属性默认特性
+ var person={};
+ Object.defineProperty(person,'name',{
+ 	writable:false,
+ 	configurable:false,
+ 	value:'Nicholas'
+ });
+ console.log(person.name);
+ // person.name='Greg';
+ // delete person.name;
+ console.log(person.name);
+
+
+ // 访问器属性
+ var book={
+ 	_year:2004,
+ 	edition:1
+ };
+ Object.defineProperty(book,'year',{
+ 	get:function(){
+ 		return this._year;
+ 	},
+ 	set:function(newValue){
+ 		if(newValue > 2004){
+ 			this._year = newValue;
+ 			this.edition += newValue-2004;
+ 		}
+ 	}
+ });
+ console.log(book);
+ console.log(book.year);
+ console.log(book.year=2018);
+ console.log(book.edition);
+
+
+ // 定义多个属性
+ var books={};
+ Object.defineProperties(books,{
+ 	_year:{
+ 		value:2004
+ 	},
+ 	editionL:{
+ 		value:1
+ 	},
+ 	year:{
+ 		get:function(){
+ 			return this._year;
+ 		},
+ 		set:function(newValue){
+ 			if(newValue>2004){
+ 				this._year=newValue;
+ 				this.edition+=newValue-2004;
+ 			}
+ 		}
+ 	}
+ });
+ console.log(books);
+
+
+ // 读取属性的特性
+ var descriptor = Object.getOwnPropertyDescriptor(books,'_year');
+ console.log(descriptor.value);
+ console.log(descriptor.configurable);
+ console.log(typeof descriptor.get);
+
+
+
+ // 创建对象
+ // 工厂模式: 抽象创建具体对象的过程
+ function createPerson(name,age,job){
+ 	var o=new Object();
+ 	o.name = name;
+ 	o.age = age;
+ 	o.job = job;
+ 	o.sayName = function(){
+ 		console.log(this.name);
+ 	};
+ 	return o;
+ };
+ var person1 = createPerson('Nicholas',29,'Software Engineer');
+ var person2 = createPerson('Greg',27,'Doctor');
+ console.log(person1,person2);
+
+ // 构造函数模式
+function Person(name,age,job){
+	this.name=name;
+	this.age=age;
+	this.job=job;
+	this.sayName=function(){
+		console.log(this.name);
+	};
+};
+var p1 = new Person('Nicholas',29,'Software Engineer');
+var p2 = new Person('Nicholas',27,'Doctor');
+console.log(p1);
+console.log(p1.constructor===Person);
+console.log(p2.constructor===Person);
+console.log(p1 instanceof Object);
+console.log(p1 instanceof Person);
+console.log(p1.sayName===p2.sayName);
+
+// 原型模式
+function Peop(){};
+Peop.prototype.name='Nicholas';
+Peop.prototype.age=29;
+Peop.prototype.sayName=function(){
+	console.log(this.name);
+};
+var peop1= new Peop();
+var peop2= new Peop();
+console.log(peop1.sayName===peop2.sayName);
+console.log(Peop.prototype.constructor);
+
+
+/* 1. 理解原型对象 */
+console.log(Peop.prototype.isPrototypeOf(peop1));
+console.log(Object.getPrototypeOf(peop1) === Peop.prototype);
+
+peop1.name='Greg';
+console.log(peop1.name);
+console.log(peop1.hasOwnProperty('name'));//在给定属性存在于对象实例中返回true
+
+/* 2. 原型于in操作符 */
+
+// :1) in单独使用 在通过对象能够访问给定属性时返回true
+function People(){};
+People.prototype.name='Nicholas';
+People.prototype.age=29;
+People.prototype.job='Software Engineer';
+People.sayName=function(){
+	console.log(this.name);
+};
+var po1 = new People;
+var po2 = new People;
+po2.name='Greg';
+
+console.log(po1.hasOwnProperty('name'));
+console.log(po1.name);
+console.log('name' in po1);
+
+// 同时使用hasOwnProperty()方法和in操作符可以确定该属性是存在对象中还是原型中
+function hasPrototypeProperty(object,name){
+	return !object.hasOwnProperty(name) && (name in object);
+};
+var resPeo1 = hasPrototypeProperty(po1,'name');
+var resPeo2 = hasPrototypeProperty(po2,'name');
+console.log(resPeo1,resPeo2);
+
+// :2) for-in循环使用
+
+
+// 更简单的原型语法
+function Peops(){};
+Peops.prototype = {
+	name:'Nicholas',
+	age:29,
+	job:'Software Engineer',
+	sayName:function(){
+		console.log(this.name);
+	}
+};
+// 重置构造函数, 只适用于ES5兼容的浏览器
+Object.defineProperty(Peops.prototype,'constructor',{
+	enumerable:false,
+	value:Peops
+});
+
+
+/* 原型的动态性 */
+
+
+/* 原生对象的原型 */
+// 打印原生对象原型
+console.log(Array.prototype);
+console.log(String.prototype);
+console.log(typeof Array.prototype.sort);
+console.log(typeof String.prototype.substring);
+// 为原生对象添加自定义原型---不推荐
+String.prototype.srartsWith = function(text){
+	return this.indexOf(text) === 0;
+};
+var msg = 'Hell world';
+console.log(msg.srartsWith('Hell'));
+
+
+/* 原型对象的问题 */
+function Boot(){};
+Boot.prototype.arrs=['she','hei'];
+
+var b1 = new Boot;
+var b2 = new Boot;
+console.log(b1,b2);
+
+b1.arrs.push('Van');
+console.log(b1,b2);
+
+
+/* 组合使用构造函数模式和原型模式 */
+function PersonAll(name,age,job){
+	this.name = name;
+	this.age = age;
+	this.job = job;
+	this.friends = ['Shelby','Court'];
+};
+PersonAll.prototype.sayName = function(){
+	console.log(this.name);
+};
+var pAll1 = new PersonAll('Nicholas',29,'Software Engineer');
+var pAll2 = new PersonAll('Greg',27,'Doctor');
+
+pAll1.friends.push('Van');
+console.log(pAll1.friends, pAll2.friends);
+console.log(pAll1.friends===pAll2.friends);
+console.log(pAll1.sayName===pAll2.sayName);
+
+
+/* 动态原型模式 */
+function PersTo(name,age,job){
+	// 属性
+	this.name = name;
+	this.age = age;
+	this.job = job;
+	// 方法
+	if(typeof this.sayName !== 'function'){
+		PersTo.prototype.sayName = function(){
+			console.log(this.name);
+		}
+	}
+};
+var f1 = new PersTo('Nicholas',29,'Software Engineer');
+f1.sayName();
+
+
+/* 寄生构造函数模式 */
+
+
+/* 稳妥构造函数模式 */
+function Ps(name,age,job){
+	// 创建要返回的对象
+	var o = new Object();
+
+	// 可以在这里定义私有变量和函数
+	// 添加方法
+	o.sayName = function(){
+		console.log(name);
+	};
+	return o;
+}
+var ps1 = Ps('Nicholas',29,'Software Engineer');
+console.log(ps1);
+ps1.sayName();
+
+
+
+</script>
+</body>
+</html>

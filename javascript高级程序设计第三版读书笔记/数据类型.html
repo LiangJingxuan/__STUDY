@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			// null
+			var obj=null;
+			console.log(obj);
+			obj={
+				a:1,b:2
+			};
+			console.log(obj);
+
+			// boolean
+			var n=NaN; // -1
+			if(n){
+				console.log('ok');
+			}
+
+			// number
+			isNaN(NaN); // true
+			isNaN(10); // false
+
+
+			// Number()
+			var n1 = Number('hello'); // NaN
+			var n2 = Number(''); // 0
+			var n3 = Number('00011'); // 11
+			var n4 = Number(true); // 1
+
+
+			// parseInt()
+			var m1 = parseInt('12da'); // 12
+			var m2 = parseInt(''); // NaN
+			var m3 = parseInt('0xA'); // 10
+			var m4 = parseInt(22.5); // 22
+			var m5 = parseInt('70'); // 70
+			var m6 = parseInt('070'); // 56 | 0
+
+			var m7 = parseInt('10ds',10); // 转换10进制的数字
+
+
+			// parseFloat()
+
+
+
+
+			// 操作符
+
+
+			// 布尔操作符
+			// 短路
+			var res = false && aa;
+			console.log(res);
+
+			var res2 = true || bb;
+			console.log(res2);
+
+			var result = 0 || 1;
+			console.log(result);
+
+
+			// 乘性操作符
+			console.log(66 / 11);
+
+
+		</script>
+	</body>
+</html>

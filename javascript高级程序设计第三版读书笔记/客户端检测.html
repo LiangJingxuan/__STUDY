@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+<script>
+'use strict';
+/**
+ *	客户端检测 兼容性
+ *
+ */
+
+ /* 能力检测 */
+// 例如:
+function getElement(id){
+	if(document.getElementById){
+		return document.getElementById(id);
+	}else if(document.all){
+		return document.all[id];
+	}else{
+		throw new Error('No way to retrieve element.');
+	}
+}
+
+/* 更可靠的能力检测 */
+// 检测确定对象是否支持排序，检查sort是不是函数
+function isSort(obj){
+	return typeof obj.sort === 'function';
+}
+
+// 在浏览器环境下测试任何对象的某个特性是否存在
+function isHostMethod(object,property){
+	var t = typeof object[property];
+	return t === 'function' || 
+		(!!(t==='object' && object[property])) || t==='unknown';
+}
+// 使用
+var res = isHostMethod(window,'open');
+console.log(res);
+
+/* 能力检测, 不是浏览器检测 */
+
+/* 怪癖检测 */
+
+
+
+
+
+/* 用户代理检测 */
+
+// 用户代理字符串的历史
+
+// 用户代理字符串检测技术
+/*if(ieVer >= 6){
+	// 代码
+}*/
+
+
+// 五大呈现引擎: 'IE Gecko WebKit KHTML Opera'
+// 封装检测脚本方法
+var client = function(){
+	var engine = {
+
+		// 呈现引擎
+		ie:0,
+		gecko:0,
+		webkit:0,
+		khtml:0,
+		opera:0,
+
+		// 具体的版本号
+		ver:null
+	};
+
+	// 在此检测呈现引擎平台和设备
+	return {
+		engine:engine
+	};
+}();
+
+ 
+
+
+</script>
+</body>
+</html>
