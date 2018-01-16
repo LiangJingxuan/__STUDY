@@ -141,7 +141,52 @@ if(document.readyState==='complate'){
 // 插入标记
 
 // 1. innerHTML属性
-( 11.3.6 )
+
+// 2. outerHTML属性
+
+// 3. insertAdjacentHTML() 方法
+// 例:
+// 作为前一个同辈元素插入
+// element.insertAdjacentHtml('afterbein','<p>hello</p>');
+
+
+// 4. 内存与性能问题
+// 在使用以上属性和方法前最好先手动删除要被替换的元素的所有事件处理程序和js对象属性
+// 例如:(这种写法优化性能)
+var items = '';
+for(var i=0;i<5;i++){
+	items += '<li>'+i+'</li>'
+};
+myDiv.innerHTML = items;
+
+
+
+
+
+// scrollIntoView() 方法
+// 让元素可见
+document.body.scrollIntoView();
+
+
+
+
+
+
+/* 专有扩展 */
+
+// 1. 文档模式
+
+// 2. children属性
+
+// 3. contains()方法
+
+// 4. 插入文本
+// innerText, outerText
+
+// 5. 滚动
+
+
+
 
 
 </script>
