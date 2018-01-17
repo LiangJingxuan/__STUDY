@@ -9,11 +9,11 @@
 <script>
 'use strict';
 /**
- *	DOM2和DOM3(针对XML和XHTML文档)
+ *	DOM2和DOM3
  *
  */
 
- /* DOM变化 */
+ /* DOM变化 | (针对XML和XHTML文档) */ 
 
 
 // 针对XML命名空间的变化
@@ -52,7 +52,7 @@ op.style.width = '100px';
 op.style.height = '100px';
 
 // 指定边框
-op.style.boder = '1px solid black';
+op.style.border = '1px solid black';
 
 console.log(op.style.backgroundColor);
 console.log(op.style.width);
@@ -60,6 +60,63 @@ console.log(op.style.height);
 
 // 1. DOM样式属性和方法
 
+// 设置属性
+op.style.cssText = 'width:25px;height:50px;background-color:blue;';
+console.log(op.style.cssText);
+
+// 循环属性
+var prop, value, i, len;
+for(i=0,len=op.style.length;i<len;i++){
+	prop = op.style[i];	// 属性名
+	value = op.style.getPropertyValue(prop); // 属性值
+
+	console.log(prop, value);
+}
+
+// 移除属性
+op.style.removeProperty('background-color');
+console.log(op.style.cssText);
+
+// 2. 计算的样式
+// document.defaultView.getComputedStyle(op,null);  非ie
+// op.currentStyle;  ie
+
+
+
+
+
+// 操作样式表
+
+// 1. css规则
+// 2. 创建规则
+// 3. 删除规则
+
+
+
+
+
+// 元素大小
+
+// 1. 偏移量
+// offsetHeight
+// offsetWidth
+// offsetLeft
+// offsetTop
+
+
+// 2. 客户区大小
+// clientWidth
+// clientHeight
+
+
+// 3. 滚动大小
+// scrollHeight
+// scrollWidth
+// scrollLeft
+// scrollTop
+
+
+// 4. 确定元素大小
 
 
 
