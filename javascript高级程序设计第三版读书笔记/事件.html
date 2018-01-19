@@ -5,7 +5,8 @@
 <title></title>
 </head>
 <body>
-	<input type="button" value="click me" name="action" onclick='showMessage()'>
+	<input type="button" value="click me" name="action" onclick='showMessage(this.value)'>
+	<button id="btn">event</button>
 <script>
 'use strict';
 /**
@@ -31,9 +32,92 @@
 // 事件处理程序
 
 // HTML事件处理程序
-function showMessage(){
-	console.log(123);
+function showMessage(v){
+	// console.log(v);
 }
+
+// DOM 0级事件处理程序
+var btn = document.getElementById('btn');
+btn.onclick = function(e){
+	// console.log(e);
+	// console.log(this.id);
+
+	btn.onclick = null; // 删除事件处理程序
+}
+
+// 自动执行点击事件
+/*(function(){
+	setInterval(function(){
+		// btn.click();
+	},500)
+	var btn = document.getElementById('btn');
+	btn.onclick = function(){
+		console.log('ok');
+	}
+	
+
+})();*/
+
+// DOM 2级事件处理程序
+
+// addEventListener( 要处理的事件名 | 作为事件处理程序的函数 | true'捕获阶段调用事件处理程序' / false'冒泡阶段调用事件处理程序' )
+
+// removeEventListener( 要处理的事件名 | 作为事件处理程序的函数 | true'捕获阶段调用事件处理程序' / false'冒泡阶段调用事件处理程序' )
+
+// 主要好处：可以在一个元素中添加多个事件处理程序
+
+var handler = function(){
+	console.log(this.id)
+}
+
+btn.addEventListener('click',handler,false); // 增加事件
+
+btn.removeEventListener('click',handler,false); // 删除事件
+
+
+// IE事件处理程序
+// attachEvent( 事件处理程序名称 | 事件处理程序函数 )
+// detachEvent( 事件处理程序名称 | 事件处理程序函数 )
+
+
+// 跨浏览器的事件处理程序
+
+
+
+
+
+
+ /* 事件对象 */ 
+
+// DOM中的事件对象 event
+// 阻止特定事件的默行为：preventDefault() 方法
+// 阻止事件冒泡或事件捕获使用：event.stopPropagation() 方法
+// 用来确定事件当前位于事件流的哪个阶段用 event.eventPhase 属性判断
+
+
+// IE中的事件对象
+// 阻止特定事件的默认行为：window.returnValue = false;
+// 阻止事件冒泡使用：window.event.cancelBubble = true;
+
+
+// 跨浏览器的事件对象
+btn.onclick = function(e){
+	return e || window.event;
+}
+
+
+
+
+
+
+ /* 事件类型 */ 
+ 
+
+
+
+
+
+
 
 
 
