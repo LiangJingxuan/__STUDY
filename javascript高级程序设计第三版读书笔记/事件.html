@@ -112,9 +112,95 @@ btn.onclick = function(e){
 
  /* 事件类型 */ 
  
+ // UI事件
+ // 1. load事件
+ // 2. unload事件
+ // 3. resize事件
+ // 4. scroll事件
+
+
+ // 焦点事件
+ // 1. focus事件
+ // 2. blur事件
+
+
+// 鼠标与滚轮事件
+
+// 鼠标事件
+// 滚轮事件
+// 客户区坐标位置
+document.addEventListener('click',function(e){
+	console.log(e.clientX+'--'+e.clientY);
+},false);
+//页面坐标位置
+document.addEventListener('click',function(e){
+	console.log(e.pageX+'###'+e.pageY);
+},false);
+// 屏幕坐标位置
+document.addEventListener('click',function(e){
+	console.log(e.screenX+'&&&&'+e.screenY);
+},false);
+// 修改键
+// 相关元素
+// 鼠标按钮
+// 更多的事件信息
+// 鼠标滚轮事件
+document.addEventListener('mousewheel',function(){
+	console.log(1);
+},false);
+// 触摸设备
+// 无障碍性问题
 
 
 
+
+// 键盘与文本事件
+
+// 键码
+document.addEventListener('keydown',function(e){
+	console.log(e.keyCode);
+},false)
+// 字符编码
+// DOM3级变化
+// textInput事件 
+// 设备中的键盘事件
+
+
+
+// 复合事件
+
+
+
+// 变动事件
+
+// 删除节点
+// 插入节点
+
+
+
+
+
+// HTML5事件
+
+// contextmenu事件
+// beforeunload事件
+document.addEventListener('beforeunload',function(e){
+	var msg = '是否离开此页面?';
+	e.returnValue = msg;
+	return msg;
+},false);
+// DOMContentLoaded 事件
+// pageshow 和 pagehide 事件
+// hashchange 事件
+
+
+
+
+
+
+// 设备事件
+
+// orientationchange 事件
 
 
 
