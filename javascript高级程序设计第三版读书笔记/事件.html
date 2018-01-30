@@ -7,6 +7,14 @@
 <body>
 	<input type="button" value="click me" name="action" onclick='showMessage(this.value)'>
 	<button id="btn">event</button>
+
+	<!--  事件委托案例  -->
+	<ul id="myLinks">
+		<li id="goSomewhere">Go somewhere</li>
+		<li id="doSomething">Do something</li>
+		<li id="sayHi">Say hi</li>
+	</ul>
+
 <script>
 'use strict';
 /**
@@ -201,7 +209,63 @@ document.addEventListener('beforeunload',function(e){
 // 设备事件
 
 // orientationchange 事件
+// MozOrientation 事件
+// deviceorientation 事件
+// devicemotion 事件
 
+
+
+
+
+// 触摸与手势事件
+
+// 触摸事件：
+// touchstart 
+// touchmove
+// touchend
+// touchcancel
+
+// 手势事件：
+// gesturestart
+// gesturechange
+// gestureend
+
+
+
+
+
+
+
+ /* 内存和性能 */ 
+
+ // 事件委托
+ // 例：
+
+var list = document.getElementById('myLinks');
+list.addEventListener('click',function(e){
+	// ... 
+
+},false);
+
+
+// 移除事件处理程序
+// btn.click = null -----> 移除事件处理程序
+
+
+
+
+
+ /* 模拟事件 */ 
+
+ // DOM中的事件模拟
+ // 模拟鼠标事件
+ // 模拟键盘事件
+ // 模拟其他事件
+ // 自定义DOM事件
+
+
+ // IE中的事件模拟
+ 
 
 
 
