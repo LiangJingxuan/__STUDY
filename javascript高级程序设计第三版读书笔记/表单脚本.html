@@ -5,7 +5,9 @@
 <title></title>
 </head>
 <body>
-
+	<form name="formAll" action="">
+		<input type="submit" name="subBtn">
+	</form>
 <script>
 'use strict';
 /**
@@ -19,6 +21,27 @@
 // form.submit()
 
 // 重置表单
+// form.reset()
+
+// 表单字段 通过element:
+// form.element[0]
+// form.element['textbox1']
+// 1. 共有的表单字段属性
+// 例：
+// 避免多次提交表单
+/*
+var formAll = document.getElementsByName('formAll')[0];
+formAll.addEventListener('submit',function(){
+	// 取得提交按钮
+	var btn = document.getElementsByName('subBtn')[0]
+	// 禁用按钮
+	btn.disabled = true;
+},false);
+*/
+
+// 2. 共有的表单字段方法
+
+
 
 
 
