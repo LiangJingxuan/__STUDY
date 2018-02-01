@@ -7,6 +7,12 @@
 <body>
 	<form name="formAll" action="">
 		<input type="submit" name="subBtn">
+		<select name="item" multiple>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select>
 	</form>
 <script>
 'use strict';
@@ -70,6 +76,73 @@ formAll.addEventListener('submit',function(){
 // paste
 
 // 自动切换焦点
+/*
+(function(){
+	function tabForward(event){
+		event = EventUtil.getEvent(event);
+		var target = EventUtil.getTarget(event);
+
+		if(target.value.length == target.maxLength){
+			var form = target.form;
+
+			for(var i=0; len=form.elements.length;i<len;i++){
+				if(form.elements[i]==target){
+					if(form.elements[i+1]){
+						form.elements[i+1].focus();
+					}
+
+					return;
+				}
+			}
+		}
+	}
+
+	var text1 = document.getElementById('text1');
+	var text2 = document.getElementById('text2');
+	var text3 = document.getElementById('text3');
+
+	EventUtil.addHandler(text1,'keyup',tabForward);
+	EventUtil.addHandler(text2,'keyup',tabForward);
+	EventUtil.addHandler(text3,'keyup',tabForward);
+
+})();
+*/
+
+// HTML5约束验证API
+// 1. 必填字段 required
+// 2.其他输入类型 type=email / type=url
+// 3. 数值范围
+// 4. 输入模式 pattern(正则表达式属性)
+// 5. 检测有效性 checkValidity()
+// 6. 禁用验证
+
+
+
+/* 选择框脚本 */ 
+
+// 选择选项
+// 添加选项
+var newOption = new Option('text','value');
+selectbox.add(newOption,undefined);
+// 移除选项
+selectbox.remove(0); // 移除第一个选项
+// 移动和重拍选项
+
+
+
+
+/* 表单序列化 */ 
+
+
+
+
+/* 富文本编辑 */ 
+
+// 使用contenteditable属性
+// 操作富文本
+// 富文本选区
+// 表单与富文本
+
 
 
 
