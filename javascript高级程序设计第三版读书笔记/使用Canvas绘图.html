@@ -5,9 +5,22 @@
 <title></title>
 </head>
 <body>
+	<!-- 基本用法 -->
 	<canvas id="drawing" width="200" height="200">
 		A drawing of somerthing.
 	</canvas>
+
+	<!-- 描边和填充 -->
+	<canvas id="drawing2" width="200" height="200"></canvas>
+
+	<!-- 绘制矩形 -->
+	<canvas id="drawing3" width="200" height="200"></canvas>
+
+	<!-- 绘制路径：不带数字的时钟表盘 -->
+	<canvas id="drawing4" width="200" height="200"></canvas>
+
+
+
 <script>
 'use strict';
 /**
@@ -16,6 +29,150 @@
  */
 
  /* 基本用法 */ 
+ var drawing = document.getElementById('drawing');
+ // 确定浏览器支持 canvas元素
+ if(drawing.getContext){
+ 	var context1 = drawing.getContext('2d');
+ 	
+ 	// 更多代码
+
+ 	// 取得图像的数据URI
+ 	var imgURI = drawing.toDataURL('image/png');
+
+ 	// 显示图像
+ 	var image = document.createElement('img');
+ 	image.src = imgURI;
+ 	document.body.appendChild(image);
+
+ }
+
+
+
+
+ /* 2D上下文 */ 
+
+// 填充和描边
+var drawing2 = document.getElementById('drawing2');
+if(drawing2.getContext){
+	var context2 = drawing2.getContext('2d');
+	context2.strokeStyle='red';	// 描边
+	context2.fillStyle='#0000ff'; // 填充
+}
+
+// 绘制矩形
+var drawing3 = document.getElementById('drawing3');
+if(drawing3.getContext){
+	var context3 = drawing3.getContext('2d');
+
+	// 绘制红色矩形
+	context3.fillStyle = '#ff0000';
+	context3.fillRect(10,10,50,50);
+	// 绘制红色描边矩形
+	context3.strokeStyle = '#ff0000';
+	context3.strokeRect(10,10,50,50);
+
+
+	// 绘制半透明的蓝色矩形
+	context3.fillStyle = 'rgba(0,0,255,0.5)';
+	context3.fillRect(30,30,50,50);
+	// 绘制半透明的蓝色描边矩形
+	context3.strokeStyle = 'rgba(0,0,255,0.5)';
+	context3.strokeRect(30,30,50,50);
+
+
+	// 在两个矩形重叠的地方清除一个小矩形
+	context3.clearRect(40,40,10,10);
+}
+
+// 绘制路径
+// 例：
+// 绘制一个不带数字的时钟表盘
+var drawing4 = document.getElementById('drawing4');
+if(drawing4.getContext){
+	var context4 = drawing4.getContext('2d');
+
+	// 开始路径
+	context4.beginPath();
+
+	// 绘制外圆
+	context4.arc(100,100,99,0,2*Math.PI,false);
+
+	// 绘制内圆
+	context4.moveTo(194,100);
+	context4.arc(100,100,94,0,2*Math.PI,false);
+
+	// 绘制分针
+	context4.moveTo(100,100);
+	context4.lineTo(100,15);
+
+	// 绘制时针
+	context4.moveTo(100,100);
+	context4.lineTo(35,100);
+
+	// 绘制文本
+	context4.font = 'bold 14px Arial';
+	context4.textAlign = 'center';
+	context4.textBaseline = 'middle';
+	context4.fillText('12',100,20);
+	// 起点对其
+	context4.textAlign='start';
+	context4.fillText('12',100,40);
+	// 终点对齐
+	context4.textAlign='end';
+	context4.fillText('12',100,60);
+
+	// 描边路径
+	context4.stroke();
+
+}
+
+// 绘制文本↑↑↑↑↑↑
+
+// 变换
+
+// 绘制图像
+
+// 阴影
+
+// 渐变
+
+// 模式
+
+// 使用图像数据
+
+// 合成
+
+
+
+
+ /* WebGL */ 
+
+ // 类型化数组
+ // 1. 视图
+ // 2. 类型化视图
+
+ // WebGL上下文
+ // 1. 常量
+ // 2. 方法命名
+ // 3. 准备绘图
+ // 4. 视口与坐标
+ // 5. 缓冲区
+ // 6. 错误
+ // 7. 着色器
+ // 8. 编写着色器
+ // 9. 编写着色器程序
+ // 10. 为着色器传入值
+ // 11. 调试着色器和程序
+ // 12.绘图
+ // 13. 纹理
+ // 14. 读取像素
+
+ // 支持
+
+
+
+
+
 
 
 </script>
