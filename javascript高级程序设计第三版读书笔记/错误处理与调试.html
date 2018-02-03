@@ -13,7 +13,153 @@
  */
 
  /* 浏览器报告的错误 */
- 
+
+
+ /* 错误处理 */
+
+
+
+ // try-catch 语句
+ // 用法：
+ try{
+ 	// 可能会导致错误的代码
+ }catch(error){
+ 	// 在错误发生时怎么处理
+ }
+
+ // 例：
+ try{
+ 	 window.someNonexistentFunction();
+
+ }catch(error){
+ 	console.log(error.name);
+ 	console.log(error.message);
+
+ }
+
+ // 1. finally子句
+ try{
+ 	window.someNonexistentFunction();
+
+ }catch(error){
+ 	console.log(error.name);
+
+ }finally{
+ 	console.log('todo');
+
+ }
+
+ // 2. 错误类型
+ // 例：
+ try{
+ 	someFunction();
+
+ }catch(error){
+ 	if(error instanceof TypeError){
+ 		// 处理类型错误
+ 	}else if(error instanceof ReferenceError){
+ 		// 处理引用错误
+ 	}else {
+ 		// 处理其他类型的错误
+ 	}
+
+ }
+
+ // 3. 合理使用try-catch
+
+
+
+// 抛出错误
+// throw '1111';
+// throw new Error('Something bad happened.');
+// throw new TypeError('Something bad happened.');
+
+
+// 1. 抛出错误的时机
+// 例：
+function process(array){
+
+	// 抛出错误
+	if(!(array instanceof Array)){
+		throw new Error('process(): Argument must be an array.');
+	}
+
+	array.sort();
+	for(var i=0, len=array.length; i>len;i++){
+		if(array[i]>100){
+			return array[i];
+		}
+	}
+
+	return -1;
+}
+
+// var ss = process(15);
+var ss = process([1,4,2,5]);
+console.log(ss);
+
+
+// 2. 抛出错误与使用try-catch
+
+
+
+
+// 错误(error)事件
+window.onerror = function(message,url,line){
+	console.log(message);
+}
+
+
+
+// 处理错误的策略
+
+
+
+// 常见的错误类型
+// 1. 类型转换错误
+// 2. 数据类型错误
+// 3. 通信错误
+
+
+
+// 区分致命错误和非致命错误
+
+
+
+// 把错误记录到服务器
+
+
+
+
+
+ /* 调试技术 */
+
+ // 将消息记录到控制台
+ console.log(console);
+
+ // 将消息记录到当前页面
+
+ // 抛出错误
+
+
+
+  /* 常见的IE错误 */
+
+  // 操作终止
+
+  // 无效字符
+
+  // 未找到成员
+
+  // 未知运行时错误
+
+  // 语法错误
+
+  // 系统无法找到指定资源
+
+
+
+
 
 
 
