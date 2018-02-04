@@ -12,7 +12,59 @@
  *
  */
 
- /* 语法 */
+ /* XMLHttpRequest 对象 */
+
+ var xhr = new XMLHttpRequest();
+ console.log(xhr);
+
+ // XHR的用法
+ xhr.onreadystatechange = function(){
+  if(xhr.readyState==4){
+      if((xhr.status>=200 && xhr.status<300) || xhr.status==304){
+        console.log(xhr.responseText);
+      }else{
+        console.log('Request was unsuccessful:'+xhr.status);
+      }
+  }
+ }
+ xhr.open('get','example.php',false);
+ xhr.send(null);
+
+ // HTTP头部信息
+ // setRequestHeader("myheader","myvalue"): 设置自定义请求头信息
+ // getRequestHeader("myheader"): 取得相应响应头部信息 
+ // getAllRequestHeaders(): 取得包含所有头部信息的长字符串
+
+ // GET请求
+
+ // POST请求
+
+
+
+  /* XMLHttpRequest2级 */
+
+  // FormData 序列化
+  var data = new FormData();
+  data.append('name','Nicholas');
+  console.log(data);
+
+  // 超时设定
+  xhr.timeout = 1000;
+  xhr.ontimeout = function(){
+    console.log('Request did not return in a second.');
+  }
+
+  // overrideMimeType("text/xml") 方法
+
+
+
+
+
+  /* 进度事件 */
+
+
+
+
 </script>
 </body>
 </html>
