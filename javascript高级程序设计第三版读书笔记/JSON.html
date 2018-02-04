@@ -24,6 +24,49 @@
  console.log(person);
 
  // 数组
+ var list = [
+ 	{
+ 		"title":"Professional javascript",
+ 		"authors":[
+ 			"Nicholas C. Zakas"
+ 		],
+ 		"edition":3,
+ 		"year":2011
+ 	},
+ 	{
+ 		"title":"Professional javascript",
+ 		"authors":[
+ 			"Nicholas C. Zakas"
+ 		],
+ 		"edition":3,
+ 		"year":2011
+ 	}
+ ];
+ console.log(list);
+
+
+
+
+  /* 解析与序列化 */
+
+  // JSON对象
+  // stringify() parse()
+  var jsonText = JSON.stringify(list);
+  var jsonObj = JSON.parse(jsonText);
+  console.log(jsonText);
+  console.log(jsonObj);
+
+  // 序列化选项
+  // 1. 过滤结果
+  var jsonText2 = JSON.stringify(person,['name']);
+  console.log(jsonText2);
+  // 2. 字符串缩进
+  var jsonText3 = JSON.stringify(person,null,4);
+  console.log(jsonText3);
+  // 3. toJSON()方法
+
+  // 解析选项
+
 
 
 
