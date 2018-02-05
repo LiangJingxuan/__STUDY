@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+<script>
+'use strict';
+/**
+ *	高级技巧
+ *
+ */
+
+ /* 高级函数 */
+
+ // 安全的类型检测
+ function isArray(value){
+  return Object.prototype.toString.call(value) == '[object Array]';
+ }
+ function isFunction(value){
+  return Object.prototype.toString.call(value) == '[object Function]';
+ }
+ function isRegExp(value){
+  return Object.prototype.toString.call(value) == '[object Regexp]';
+ }
+
+
+ // 作用域安全的构造函数
+ function Person(name,age,job){
+  if(this instanceof Person){
+    this.name = name;
+    this.age = age;
+    this.job = job;
+
+  }else{
+    return new Person(name,age,job);
+
+  }
+ }
+ var person1 = Person('Nichoalas',29,'software engineer');
+ var person1 = Person('Nichoalas',29,'software engineer');
+
+
+ // 惰性载入函数 
+ // 第一次调用的过程中，该函数会被覆盖为另外一个按格式方式执行的函数，这样任何对原函数的调用都不用再经过执行的分支了。
+
+ var createXHR = (function(){
+  if(typeof XMLHttpRequest != 'undefined'){
+    return function(){
+      console.log(1);
+      return new XMLHttpRequest();
+    }
+
+  }else if(typeof ActivexObject != 'undefined'){
+    return function(){
+      // ....
+      return 1;
+    }
+
+  }else{
+    return function(){
+      throw new Error('no xhr object available.');
+    }
+
+  }
+ })();
+ createXHR();
+
+
+ // 函数绑定
+
+
+
+</script>
+</body>
+</html>
