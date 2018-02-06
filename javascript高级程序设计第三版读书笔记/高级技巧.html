@@ -117,7 +117,98 @@
   /* 防篡改对象 */
 
   // 不可扩展对象
+  var person = {name:'Nichoalas'};
+  Object.preventExtensions(person);  // 改变创建后对象添加属性和方法的行为
+  person.age = 29;
+  console.log(person.age); // undefined
+  // 确定对象是否可以扩展
+  Object.istExtensible(person); // 返回true或false
+
+
+  // 密封的对象
+  var person = {name:'Nichoalas'};
+  Object.seal(person);  // 不可扩展并且不能删除已有的属性和方法
+  // 确定对象是否密封
+  Object.isSealed(person);  // 返回true或false
+
+
+  // 冻结的对象
+  var person = {name:'Nichoalas'};
+  Object.freeze(person);  // 不可扩展又是密封的而且对象数据属性写操作被设置为false
+  // 检测对象是否冻结
+  Object.isFrozen(person);  // 返回true或false
+
+
+
+
+
+  /* 高级定时器 */
+
+  // 重复的定时器(避免重复定时器)
+  setTimeout(function(){
+    var div = document.getElementById('myDiv');
+    left = parseInt(div.style.left)+5;
+    div.style.left = left+'px';
+
+    if(left<200){
+      setTimeout(arguments.callee,50);
+    }
+
+  },50);
+
+
+  // Yielding Processes
+  function chunk(array,process,context){
+    setTimeout(function(){
+      var item = array.shift();
+      process.call(context,item);
+
+      if(array.length >0){
+        setTimeout(arguments.callee,100);
+      }
+
+    },100)
+
+  }
+
+  var data = [12,123,152,78,15,556,41,58,99,15,115,456,93,20,10,33,96];
+  function printValue(item){
+    var div = document.getElementById('myDiv');
+    div.innerHTML += item+'<br>';
+
+  }
+
+  chunk(data,printValue);
+
+
+  // 函数节流
+  var processor {
+    timeoutId:null,
+    // 实际进行处理的方法
+    performProcessing:function(){
+      // 实际执行的代码
+    },
+    // 初始处理调用的方法
+    process:function(){
+      clearTimeout(this.timeoutId);
+      var that = this;
+      this.timeoutId = setTimeout(function(){
+        that.performProcessing();
+
+      },100)
+    }
+  };
+  // 尝试开始执行
+  processor.process();
+
+
+
+
+
+  /* 自定义事件 */
+
   
+
 
 
 
