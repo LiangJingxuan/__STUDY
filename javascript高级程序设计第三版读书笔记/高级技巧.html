@@ -70,6 +70,55 @@
 
  // 函数绑定
 
+ // 问题：
+ var handler = {
+  message:'event handled',
+  handleClick:function(){
+    console.log(this.message);
+  }
+ }
+ var btn = document.getElementById('myBtn');
+ btn.addEventListener('click',function(event){
+
+  // 预期输出 event handled，但是this被改变指向 指向DOM按钮找不到message所有输出undefined
+  handled.handleClick(event);
+
+ },false);
+
+
+ // 修改(定义一个bind函数)：
+ function bind(fn,context){
+  return function(){
+    return fn.apply(context,arguments);
+  }
+ }
+ // 使用修改：
+ btn.addEventListener('click',bind(handler.handleClick,handler),false);
+
+ // 使用js原声提供的bind()函数
+ btn.addEventListener('click',handler.handleClick.bind(handler),false);
+
+
+
+ // 函数柯里化
+ function curry(fn){
+  var args = Array.prototype.slice.call(arguments,1);
+  return function(){
+    var innerArgs = Array.prototype.slice.call(arguments);
+    var finalArgs = args.concat(innerArgs);
+    return fn.apply(null,finalArgs);
+  }
+ }
+
+
+
+
+
+  /* 防篡改对象 */
+
+  // 不可扩展对象
+  
+
 
 
 </script>
