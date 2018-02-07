@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+<script>
+'use strict';
+/**
+ *	离线应用与客户端存储
+ *
+ */
+
+ /* 离线检测 */
+ if(navigator.onLine){
+ 	// 正常工作
+ 	console.log('ok');
+
+ }else{
+ 	// 执行离线状态时的任务
+ 	console.log('网络异常');
+ }
+ // 从离线变为在线
+ window.addEventListener('online',function(e){
+ 	console.log(e);
+ },false);
+ // 从在线变为离线
+ window.addEventListener('offline',function(e){
+ 	console.log(e);
+ },false);
+
+
+
+
+/* 应用缓存 */
+
+
+
+
+
+/* 数据存储 */
+
+// cookie
+
+// 1. 限制
+// 2. cookie的构成
+// 3. javascript中的cookie
+document.cookie="name=Nicholas";
+document.cookie = encodeURIComponent("name")+"="+encodeURIComponent("Nicholas");
+
+
+// 封装cookie操作
+var CookieUtil = {
+	// 读取
+	get:function(name){
+		var cookieName = encodeURIComponent(name)+'=',
+			cookieStart = document.cookie.indexOf(cookieName),
+			cookieValue = null;
+
+		if(cookieStart>-1){
+			var cookieEnd = document.cookie.indexOf(';',cookieStart);
+			if(cookieEnd==-1){
+				cookieEnd = document.cookie.length;
+			}
+			cookieValue = decodeURIComponent(
+					document.cookie.substring(cookieStart+cookieName.length,cookieEnd)
+				);
+		}
+		return cookieValue;
+	},
+	// 设置
+	set:function(name,value,expires,path,domain,secure){
+		var cookieText = encodeURIComponent(name)+"="+encodeURIComponent(value);
+
+		if(expires instanceof Date){
+			cookieText += ";expires="+expires.toGMTString();
+		}
+
+		if(path){
+			cookieText += ";path="+path;
+		}
+
+		if(domain){
+			cookieText += ";domain="+domain;
+		}
+
+		if(secure){
+			cookieText +=";secure="+secure;
+		}
+
+		document.cookie=cookieText;
+	},
+	// 删除
+	unset:function(name,path,domain,secure){
+		this.set(name,"",new Date(0),path,domain,secure);
+	}
+};
+
+
+// 使用上述方法
+
+// 设置cookie
+CookieUtil.set("name2","Nicholas");
+CookieUtil.set("book","javascript");
+
+// 读取cookie
+console.log(CookieUtil.get("name2"));
+console.log(CookieUtil.get("book"));
+
+// 删除cookie
+CookieUtil.unset("name2");
+CookieUtil.unset("book");
+
+// 设置cookie包括路径、域、失效日期
+CookieUtil.set("name3","Nicholas","/books/projs/","www.wrox.com",new Date("January 1,2010"));
+
+// 删除刚刚设置的cookie
+CookieUtil.unset("name3","Nicholas","/books/projs/","www.wrox.com");
+
+// 设置安全的cookie
+CookieUtil.set("name3","Nicholas",null,null,null,true);
+
+
+// 4. 子cookie
+// 5. 关于cookie的思考
+
+
+
+
+// IE用户数据
+
+
+// Web存储机制
+
+// 1. Storage类型
+// 2. sessionStorage对象
+// 3. globalStorage 对象
+// 4. localStorage 对象
+// 5. storage 事件
+// 6. 限制
+
+
+
+// IndexedDB
+var IndexedDB = window.IndexedDB || window.msIndexedDB || window.mozIndexedDB || window.webkitIndexedDB;
+
+// 1. 数据库
+var request, database;
+request = IndexedDB.open("admin");
+request.onerror = function(event){
+	console.log("Something bad happened while trying to open:"+event.target.errorCode);
+}
+request.onsuccess = function(event){
+	database = event.target.result;
+}
+
+// 2. 对象存储空间
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
