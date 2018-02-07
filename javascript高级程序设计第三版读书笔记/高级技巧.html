@@ -207,6 +207,30 @@
 
   /* 自定义事件 */
 
+
+
+
+
+  /* 拖放 */
+
+  // 确定事件类型
+  switch(event.type){
+    case "mousedown":
+      if(targer.className.indexOf('draggable')>-1){
+        dragging = targer;
+      }
+      break;
+    case "mousemove":
+      if(dragging !== null){
+        dragging,style.left = event.clientX +'px';
+        dragging,style.top = event.clientY +'px';
+      }
+      break;
+    case "mouseup":
+      dragging = null;
+      break;
+  }
+
   
 
 
