@@ -156,6 +156,34 @@ request.onsuccess = function(event){
 }
 
 // 2. 对象存储空间
+var user = {
+	username:'007',
+	firstName:'James',
+	lastName:'Bond',
+	password:'foo'
+}
+
+var store = db.createObjectStore("user",{keyPath:"username"});
+
+// 3. 事物
+var transaction = db.transaction();
+
+// 4. 使用游标查询
+
+// 5. 键范围
+
+// 6. 设定游标方向
+
+// 7. 索引
+
+// 8. 并发问题
+
+// 9. 限制
+
+
+
+
+
 
 
 
