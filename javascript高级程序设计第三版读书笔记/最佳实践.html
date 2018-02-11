@@ -122,7 +122,49 @@
 
  // 优化DOM交互
  // 1. 最小化现场更新
- +++++++++++++++++++++++++++++++++++++++++
+ // 一下代码现成更新20次
+ var list = document.getElementById('myList'),item,i;
+ for(i=0;i<10;i++){
+ 	item = document.createElemnet('li');
+ 	list.appendChild(item);
+ 	item.appendChild(document.createTextNode('Item'+i));
+ }
+ // 优化现场更新使用文档碎片方法
+ var list = document.getElementById('myList'),
+ 	fragment = document.createDocumentPragment(),
+ 	item, i;
+for(i=0;i<10;i++){
+	item = document.createElemnet('li');
+	fragment.appendChild(item);
+	item.appendChild(document.createTextNode('Item'+i));
+}
+list.appendChild(fragment);
+
+// 2. 使用innerHTML
+var list = document.getElementById('myList'), html='' i;
+for(i=0;i<10;i++){
+	html+='<li>Item'+i'</li>';
+}
+list.innerHTML = html;
+
+// 3. 使用事件代理(事件冒泡)
+
+// 4. 注意HTMLCollection
+
+
+
+
+
+ /* 部署 */
+
+ // 构建过程
+ // 验证
+ // 压缩
+ // 1. 文件压缩
+ // 2. HTTP压缩
+
+
+
 
 
 
