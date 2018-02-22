@@ -35,3 +35,67 @@ ul.nav{
 	}
 }
 // 使用混合器来复用一段样式
+@mixin horizontal-list{
+	li{
+		float:left;
+		margin-right: 10px; 
+	}
+}
+#header ul.nav{
+	@include horizontal-list;
+	float: right;
+}
+#footer ul.nav{
+	@include horizontal-list;
+	margin-top: 1em;
+}
+// 混合器与变量的结合
+@mixin horizontal($spacing:10px){
+	li{
+		float:left;
+		margin-right: $spacing;
+	}
+}
+#header ul.nav{
+	@include horizontal;
+	float:right;
+}
+#footer ul.nav{
+	@include horizontal(20px);
+	margin-top: 1em;
+}
+// 使用选择器继承来避免重复属性(带占位符)
+%error{
+	border:1px #f00;
+	background:#fdd;
+}
+.error.intrusion{
+	font-size:1.2em;
+	font-weight: bold;
+}
+.badError{
+	@extend %error;
+	border-width: 3px;
+}
+
+// **** Compass是什么 **** //
+// Compass库
+// 简单的Compass样式项目
+// 社区生态系统
+
+// **** 创建一个Compass项目 **** //
+
+// **** 使用Compass解决真实的CSS问题 **** //
+// 通过重置来保持样式表现一致
+@import 'compass/reset';
+// 不用计算创建布局
+// 通过表格辅助器为表格添加更专业的斑马条纹样式
+@import 'compass/utilities/tables';
+// CSS3属性无需在写厂商前缀
+@import 'compass/css3';
+.rounded{
+	@include border-radius(5px);
+	@include border-radius(top,left,5px);
+}
+
+
