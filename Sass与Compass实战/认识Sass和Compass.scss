@@ -1,3 +1,4 @@
+@charset "utf-8"
 /* 
 	第一部分
 	认识Sass和Compass
@@ -5,3 +6,32 @@
 
 
 /* 第一章 Sass和Compass让样式表 重换青春 */
+
+// **** 开始学习Sass **** //
+// 从CSS到Sass
+// 动态思维
+// 别做重复劳动
+
+// **** Sass你好：消除样式表冗余 **** //
+// 通过变量来复用属性值
+$company-blue:#1875e7;
+h1#brand{
+	color:$company-blue;
+}
+#sidebar{
+	background-color: $company-blue;
+}
+// 使用嵌套来快速写出多层级的选择器
+ul.nav{
+	float:right;
+	li{
+		float:left;
+		a{
+			color:#111;
+		}
+		&.current{
+			font-weight:blue;
+		}
+	}
+}
+// 使用混合器来复用一段样式
