@@ -1,5 +1,5 @@
 @charset "utf-8"
-/* 
+/*
 	第一部分
 	认识Sass和Compass
  */
@@ -9,5 +9,35 @@
 
 // **** 使用变量 **** //
 // 变量声明
+$highlight-color: #668;  // 规则块外声明的变量可以全局使用
+$basic-border: 1px soild red;
+#nav{
+  $width:100px; // 规则块内声明的变量只能在该规则块内使用
+  width: $width;
+}
 // 变量引用
+.selected{
+  border:1px $highlight-color solid;
+}
 // 变量名用中划线还是下划线分割
+// 使用中划线常用
+
+// **** 嵌套CSS规则 **** //
+#content{
+  article{
+    h1{color: #333}
+    p{margin-bottom:1.4em}
+  }
+  aside{background-color:#eee}
+}
+// 父选择器的标识符&
+.active a{
+  color:blue;
+  &:hover{
+    color:red;
+  }
+}
+//  群组选择器的嵌套
+-------------------------------------
+//  子组合选择器和同层组合选择器 : > + ~
+//  嵌套属性
