@@ -38,6 +38,82 @@ $basic-border: 1px soild red;
   }
 }
 //  群组选择器的嵌套
--------------------------------------
+.container{
+	h1,h2,h3{margin-bottom:.8em}
+}
+nav,aside{
+	a{color:blue}
+}
 //  子组合选择器和同层组合选择器 : > + ~
+.artivle{
+	~ .article{border-top:1px solid #ccc}
+	> .section{background:#eee}
+	dl > {
+		dt{color:#333}
+		dd{color:#555}
+	}
+	nav + &{margin-top: 0}
+}
 //  嵌套属性
+nav{
+	border:{
+		style:solid;
+		width:1px;
+		color:#ccc;
+	}
+}
+nav{
+	border: 1px solid #ccc{
+		left:0px;
+		right:0px;
+	}
+}
+
+// **** 导入Sass文件 **** //
+// 使用Sass部分文件
+// (导入局部文件，局部文件不生成css文件使用下划线开头做文件名)
+@import 'themes/night-sky'; // 局部文件导入可以省略前面的下划线
+// 默认变量值
+$fancybox-width:400px !default; // !default 表示如果这个变量被声明赋值，那就用它声明的值否则就用这个默认值。
+.fancybox{
+	width:$fancybox-width;
+}
+// 嵌套导入
+.blue-theme{@import 'blue-theme'} // 局部导入只在局部规则范围内有效
+// 原声的CSS导入
+
+// **** 静默注释 **** //
+// 
+/*  */
+
+// **** 混合器 **** //
+// 何时使用混合器
+// 混合器中的CSS规则
+@mixin no-bullets{
+	list-style: none;
+	li{
+		list-style-image: none; 
+		list-style-type: none;
+		margin-left: 0;
+	}
+}
+ul.plain{
+	color:#444;
+	@include no-bullets;
+}
+// 给混合器传参
+@mixin link-colors($normal,$hover,$visited){
+	color:$normal;
+	&:hover{color: $hover;}
+	&:visited{color: $visited;}
+}
+a{
+	@include link-colors(blue,red,green);
+}
+// 默认参数值
+
+// **** 使用选择器继承来精简CSS **** //
+// 何时使用继承
+// 继承的高级用法
+// 继承的工作细节
+// 使用继承的最佳实践
