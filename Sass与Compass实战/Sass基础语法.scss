@@ -111,9 +111,21 @@ a{
 	@include link-colors(blue,red,green);
 }
 // 默认参数值
+@mixin link-colors(
+		$normal,
+		$hover:$normal,
+		$visited:$normal
+	)
+{
+	color:$normal;
+	&:hover{color: $hover;}
+	&:visited{color: $visited;}
+}
+@include link-colors(red);
 
 // **** 使用选择器继承来精简CSS **** //
+// @extend
 // 何时使用继承
 // 继承的高级用法
-// 继承的工作细节
-// 使用继承的最佳实践
+// 继承的工作细节 (继承是重复的选择器 混合器是重复的属性代码)
+// 使用继承的最佳实践 (不用后代选择器去继承)
