@@ -1,27 +1,15 @@
 @charset "utf-8"
 /*
-	第二部分
-	在实战中使用Sass和Compass
+	第三部分
+	来到生产环境
  */
 
 
-/* 第五章 通过Compass使用CSS3 */
+/* 第六章 精灵 */
 
-// **** 什么是CSS3 **** //
-// 新属性：浏览器前缀让你烦透了吧
-// 让Compass拯救你
-@import 'compass/css3';
-.notice{
-	@include border-radius(5px);
-}
+// **** 精灵的工作原理 **** //
 
-// **** 通过Compass 使用CSS3 **** //
-// 圆角
-// CSS3阴影
-h2{
-	@include box-shadow{#ccc 5px 5px 2px};
-}
-// 颜色渐变
-// 用@font-face嵌入字体
-
-// **** 通过CSS PIE 支持IE **** //
+// **** 精灵的必要性 **** //
+// HTTP请求越少越好
+// 手动处理是一种折磨
+// Compass的方案
