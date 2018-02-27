@@ -9,3 +9,60 @@
 
 // **** 一张更好的白纸源自有针对性的样式重置 **** //
 // 全局样式重置
+@import "reset/utilities";
+@include global-reset;
+//  通过有针对性的样式重置进行更多控制
+@import "compass/reset/utilities";
+// html5样式重置：
+@include reset-html5;
+//  compass文档中更多的样式重置
+@include reset-box-model;
+@include reset-font;
+@include reset-focus;
+@include reset-table, reset-table-cell;
+@include reset-quotation;
+
+// **** 更快更直观的排版工具 **** //
+@import "compass/typography";  // 排版模块
+// 起锚远航：链接辅助工具
+// 1. 轻轻松松为链接配色
+a {@include link-colors{#333,#00f,#ff0,#555,#f00};}
+// 2. 通过hover-link设置悬停样式
+a{@include hover-link}
+// 3. 通过unstyled-link设置隐性的链接
+a{@include unstyled-link}
+
+// 创建各种各样的列表#
+//  1. 用pretty-bullets装点列表
+ul.features{
+  @include pretty-bullets(
+      '图片地址',
+      $padding:10px,
+      $line-height:22px
+  )
+}
+//  2. 通过no-bullet和no-bullets去掉项目符号
+li.no-bullet{@include no-bullet}
+ul.no-bullet{@include no-bullets}
+//  3. 轻松横向排布
+ul.nav{@include horizontal-list}
+ul.nav{@include horizontal-list(7px,right)}
+//  4. 用inline-list处理内联列表
+ul.words{@include delimited-list(', ')}
+
+// 用辅助工具征服文字
+// 1. 用省略号代表截断内容
+td.dot-dot-dot{
+  @include ellipsis;
+}
+//  2. 用nowrap放置文本折行
+td{@include nowrap}
+//  3. 用replace-textj将图片转换为文字
+h1.coffee{@include replace-text('图片路径')}
+
+//  布局辅助工具
+@import 'compass/layout';
+//  粘滞的页脚
+@include sticky-footer(40px,'#content','#footer','#sticky-footer');
+// 可伸展元素
+a.login{@include stretch(5px,5px,5px,5px)}
