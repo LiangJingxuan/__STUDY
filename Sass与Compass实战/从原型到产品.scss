@@ -11,3 +11,14 @@
 // 生成URL资源
 // 避免出现死链
 // 通过缓存清理避免旧图片
+#logo{background-image: image-url('logo.png')}
+
+// **** 用 Sass 和 Compass 做原型 **** //
+// 简化你的开发环境
+//  relative_assets = true  配置文件修改
+#logo { background-image: image-url("logo.png"); }
+//  直接在浏览器里设计
+
+// **** 发布成产品 **** //
+// 想不到吧！该挪窝了
++++++++++++++++++++++++++++
