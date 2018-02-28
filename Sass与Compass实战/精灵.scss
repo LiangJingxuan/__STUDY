@@ -13,3 +13,21 @@
 // HTTP请求越少越好
 // 手动处理是一种折磨
 // Compass的方案
+
+// **** 用Compass制作精灵 **** //
+// 创建一个精灵地图 (文件只能是png格式的文件)
+@import 'compass/utilities/sprites';
+@import 'icons/*.png'; // 文件夹路径
+//  生成精灵的CSS
+@include all-icons-sprites;
+.add-button{
+  @include all-icons-sprites(box-add);
+}
+
+// **** 配置Compass精灵 **** //
+// 自定义精灵地图
+// 自定义精灵的CSS
+
+// **** 驾驭精灵辅助器 **** //
+// 创建精灵地图
+// 撰写精灵的CSS
