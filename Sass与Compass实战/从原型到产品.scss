@@ -22,5 +22,17 @@
 // **** 发布成产品 **** //
 // 想不到吧！该挪窝了
 // 为生产环境编译
-//  生成相对于域名的资源
-++++++++++++++++++
+// 生成相对于域名的资源
+// 添加版权提示
+/*! Copyright © 2012, Example Inc. All Rights Reserved.  */
+// 大声注释，解析变量
+$copyright-year: unquote("2012");
+$company-name: unquote("Example, Inc.");
+/*!
+Copyright © #{$copyright-year}, #{$company-name}
+All Rights Reserved.
+*/
+// 发布CSS很简单
+// 跟源码控制、发布流程配合在一起
+// 和预发服务器一起工作
+
