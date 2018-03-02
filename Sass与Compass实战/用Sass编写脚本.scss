@@ -30,7 +30,48 @@ $cell-width:25px;
 
 // **** 函数 **** //
 //  数值函数
+/* 
+abs($number) 取$number的绝对值
+ceil($number) $number向上取整
+comparable($number-1, $number-2) 返回$number-1和$number-2是否能比较
+floor($number) $number向下取整
+percentage($number) 将小数$number转换为百分数
+round($number) 将$number转换为最接近的整数
+unit($number) 返回$number的单位
+unitless($number) 返回$number是否没单位 
+*/
+
 //  颜色函数
+/* 
+alpha($color)/opacity($color) Informative 返回$color的alpha通道
+blue($color) Informative 返回$color的蓝色通道
+green($color) Informative 返回$color的绿色通道
+hue($color) Informative 返回$color的色度属性
+lightness($color) Informative 返回$color的亮度属性
+red($color) Informative 返回$color的红色通道
+saturation($color) Informative 返回$color的饱和度属性
+adjust($color, ...) Transformative 按照给定的颜色成分值调整$color的各个属性
+complement($color) Transformative 返回$color的色环与$color的互补
+grayscale($color) Transformative 返回$color的灰度版本
+invert($color) Transformative 返回$color的反相版本
+mix($color-1, $color-2, [$weight]) Transformative 按照$weight的百分比将$color-1和$color-2混
+合在一起，返回混合后的颜色
+scale($color, ...) Transformative 按照百分比调整$color的各个属性
+set($color, ...) Transformative 将$color的各个属性设置为固定值 
+*/
+
 //  列表函数
+// nth($list,$n); 索引从1开始
+// join($list,$list2,[$separetor]);
+// length($list);
+
 //  其他Sass函数
+// tyoe-of($value)
+// if($condition,$if-true,$if-false)
+
 //  用户自定义函数
+@function grid-width($cells){
+  @return ($cells-width + $cell-padding) * $cells;
+}
+
+// **** 在选择器和属性名中使用表达式 **** //
