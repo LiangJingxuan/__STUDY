@@ -8,6 +8,18 @@
 /* 第九章 用Sass编写脚本 */
 
 // **** 使用表达式 **** //
+$grid-cells:20;
+$cell-width:25px;
+#main{
+  $main-width: $grid-cells * $cell-width;
+  $main-padding: 10px;
+  width: $main-width;
+  padding: $main-padding;
+  .sidebar{
+    width: ($main-width - $main-padding*2)/4;
+    border: ($main-width-$main-padding) solid blue;
+  }
+}
 
 // **** 理解数据类型 **** //
 // 字符串和名字
@@ -15,3 +27,10 @@
 // 颜色
 // 列表
 // 布尔值
+
+// **** 函数 **** //
+//  数值函数
+//  颜色函数
+//  列表函数
+//  其他Sass函数
+//  用户自定义函数
