@@ -30,7 +30,7 @@ $cell-width:25px;
 
 // **** 函数 **** //
 //  数值函数
-/* 
+/*
 abs($number) 取$number的绝对值
 ceil($number) $number向上取整
 comparable($number-1, $number-2) 返回$number-1和$number-2是否能比较
@@ -38,11 +38,11 @@ floor($number) $number向下取整
 percentage($number) 将小数$number转换为百分数
 round($number) 将$number转换为最接近的整数
 unit($number) 返回$number的单位
-unitless($number) 返回$number是否没单位 
+unitless($number) 返回$number是否没单位
 */
 
 //  颜色函数
-/* 
+/*
 alpha($color)/opacity($color) Informative 返回$color的alpha通道
 blue($color) Informative 返回$color的蓝色通道
 green($color) Informative 返回$color的绿色通道
@@ -57,7 +57,7 @@ invert($color) Transformative 返回$color的反相版本
 mix($color-1, $color-2, [$weight]) Transformative 按照$weight的百分比将$color-1和$color-2混
 合在一起，返回混合后的颜色
 scale($color, ...) Transformative 按照百分比调整$color的各个属性
-set($color, ...) Transformative 将$color的各个属性设置为固定值 
+set($color, ...) Transformative 将$color的各个属性设置为固定值
 */
 
 //  列表函数
@@ -75,3 +75,59 @@ set($color, ...) Transformative 将$color的各个属性设置为固定值
 }
 
 // **** 在选择器和属性名中使用表达式 **** //
+// 使用最终值替换表达式
+@mixin thing($class,$prop){
+  .thing.#{$class}{
+    prop-#{$prop}:val;
+  }
+}
+@include thing(foor,bar);
+// 使用插值来添加CSS属性的生产商前缀
+@mixin experimental($propery,$value){
+  -moz-#{$propery}:$value;
+  -webkit-#{$propery}:$value;
+  -ms-#{$propery}:$value;
+  #{$propery}:$value;
+}
+// 使用插值来编写CSS浏览器hack
+@mixin bang-hack($property, $value, $ie6-value) {
+  #{$property}: $value !important;
+  #{$property}: $ie6-value;
+}
+// 在字符串中插入变量
+content: "This element is #{$color}";
+width: calc(10% + #{$padding});
+filter: progid:DXImageTransform.Microsoft.Alpha(
+  Opacity=#{$opacity * 100}
+);
+
+// **** 控制指令 **** //
+// 对数字重复样式
+@for $i form 1 through 5{
+  .rating-#{$i}{
+    background-image: url(../rating-#{$i}.png);
+  }
+}
+//  从10到0向下计数
+@for $i from 0 through 10{
+  $i: 10 - $i;
+}
+//  从0到20隔位计算
+@for $i form 0 through 10{
+  $i: $i * 2;
+}
+//  对列表重复样式
+@each $section in home,about,archive,projects{
+  nav .#{$section}{
+    background-image: url(../#{$section}.png);
+  }
+}
+//  条件样式
+// 将@if和@else合并起来编写高级样式
+@if $alpha < 2.0{
+  background-color:black;
+}@else if $alpha < 5.0{
+  background-color: gray;
+}@else{
+  background-color: white;
+}
