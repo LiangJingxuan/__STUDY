@@ -237,20 +237,18 @@ var headAndTail = function headAndTail(head) {
 */
 // 箭头函数内部没有this
 function foo() {
-  var _this = this;
-
   setTimeout(function () {
-    console.log('id:', _this.id);
+    // console.log('id:', this.id);
   }, 100);
 }
 // 例:
 var handler = {
   id: '123456',
   init: function init() {
-    var _this2 = this;
+    var _this = this;
 
     document.addEventListener('click', function (event) {
-      return _this2.doSomething(event.type);
+      return _this.doSomething(event.type);
     }, false);
   },
   doSomething: function doSomething(type) {
@@ -270,7 +268,7 @@ function insert(val) {
     into: function into(array) {
       return {
         after: function after(afterVal) {
-          array.splic(array.indexOf(afterVal) + 1, 0, val);
+          array.splice(array.indexOf(afterVal) + 1, 0, val);
           return array;
         }
       };
@@ -282,7 +280,7 @@ function insert(val) {
 var insert = function insert(val) {
   return { into: function into(array) {
       return { after: function after(afterVal) {
-          array.splic(array.indexOf(afterVal) + 1, 0, val);
+          array.splice(array.indexOf(afterVal) + 1, 0, val);
           return array;
         } };
     } };
@@ -291,4 +289,44 @@ var insert = function insert(val) {
 insert(2).into([1, 3]).after(1); // 调用： [1,2,3] 
 
 /* 6.双冒号运算符 */
-// +++++++++++++++++++++++++++++++++++++++
+// 函数绑定运算符是并排的两个冒号（::），
+// 双冒号左边是一个对象，右边是一个函数。
+// 该运算符会自动将左边的对象，作为上下文环境（即this对象），
+// 绑定到右边的函数上面。
+
+/* 7.尾调用优化 */
+// 某个函数的最后一步是调用另一个函数
+var f = function f(x) {
+  return g(x);
+};
+// 尾调用优化
+// 注意，只有不再用到外层函数的内部变量，
+// 内层函数的调用帧才会取代外层函数的调用帧，否则就无法进行“尾调用优化”。
+// 尾递归
+// 函数调用自身，称为递归。如果尾调用自身，就称为尾递归。
+// 普通递归
+function factorial(n) {
+  if (n === 1) return 1;
+  return n * factorial(n - 1);
+}
+// 尾递归
+function factorial(n, total) {
+  if (n === 1) return total;
+  return factorial(n - 1, n * total);
+}
+// 递归函数的改写
+function factorial(n) {
+  var total = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+  if (n === 1) return total;
+  return factorial(n - 1, n * total);
+}
+// console.log(factorial(5));
+// 严格模式
+// 尾递归优化的实现
+
+/* 8.函数参数的尾逗号 */
+function clownsEverywhere(a, b, c) {
+  console.log(a, b, c);
+}
+// clownsEverywhere(1,214,56);
