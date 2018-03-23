@@ -116,7 +116,7 @@ let arr2 = ['b', 'c'];
 
 // 3）yield*
 // yield*后面跟的是一个可遍历的结构，它会调用该结构的遍历器接口
-let generator = function* () {
+/*let generator = function* () {
   yield 1;
   yield* [2,3,4];
   yield 5;
@@ -127,7 +127,7 @@ iterator.next() // { value: 2, done: false }
 iterator.next() // { value: 3, done: false }
 iterator.next() // { value: 4, done: false }
 iterator.next() // { value: 5, done: false }
-iterator.next() // { value: undefined, done: true }
+iterator.next() // { value: undefined, done: true }*/
 
 // 4）其他场合
 /*
@@ -149,15 +149,15 @@ iterator.next()  // { value: "i", done: false }
 iterator.next()  // { value: undefined, done: true }
 
 /* 5.Iterator 接口与 Generator 函数 */
-let obj3 = {
+/*let obj3 = {
   * [Symbol.iterator]() {
     yield 'hello';
     yield 'world';
   }
 };
-for (let x of obj) {
+for (let x of obj3) {
   console.log(x);
-};
+};*/
 
 /* 6.遍历器对象的 return()，throw() */
 // return():
@@ -183,7 +183,7 @@ function readLinesSync(file) {
 }
 // 三种情况，都会触发执行return方法:
 // 情况一
-for (let line of readLinesSync(fileName)) {
+/*for (let line of readLinesSync(fileName)) {
   console.log(line);
   break;
 };
@@ -196,7 +196,7 @@ for (let line of readLinesSync(fileName)) {
 for (let line of readLinesSync(fileName)) {
   console.log(line);
   throw new Error();
-};
+};*/
 
 /* 7.for...of 循环 */
 // 遍历所有数据结构的统一的方法
@@ -207,3 +207,95 @@ for (let line of readLinesSync(fileName)) {
 // （比如arguments对象、DOM NodeList 对象）、后文的 Generator 对象，以及字符串
 
 // 数组:
+console.clear();
+var array1=[3,2,4,6,'lee'];
+for(let i of array1){
+  console.log(i);
+};
+
+// Set 和 Map 结构:
+var engines = new Set(["Gecko", "Trident", "Webkit", "Webkit"]);
+for (var e of engines) {
+  console.log(e);
+};
+
+var es6 = new Map();
+es6.set("edition", 6);
+es6.set("committee", "TC39");
+es6.set("standard", "ECMA-262");
+for (var [name, value] of es6) {
+  console.log(name + ": " + value);
+};
+
+let map = new Map().set('a', 1).set('b', 2);
+for (let pair of map) {
+  console.log(pair);
+};
+// ['a', 1]
+// ['b', 2]
+
+for (let [key, value] of map) {
+  console.log(key + ' : ' + value);
+};
+// a : 1
+// b : 2
+
+// 计算生成的数据结构
+// entries()
+// keys()
+// values()
+let arrs=['a','c','q'];
+for(let i of arrs.keys()){
+  console.log(i);
+};
+
+// 类似数组的对象
+// 字符串、DOM NodeList 对象、arguments对象
+
+// 字符串
+let str1 = "hello";
+for (let s of str1) {
+  console.log(s); // h e l l o
+};
+
+// DOM NodeList对象
+let paras = document.querySelectorAll("p");
+for (let p of paras) {
+  p.classList.add("test");
+};
+
+// arguments对象
+function printArgs() {
+  for (let x of arguments) {
+    console.log(x);
+  }
+};
+printArgs('a', 'b');
+// 'a'
+// 'b'
+
+// 并不是所有类似数组的对象都具有 Iterator 接口，一个简便的解决方法，
+// 就是使用Array.from方法将其转为数组。
+let arrayLike = { length: 2, 0: 'a', 1: 'b' };
+for (let x of Array.from(arrayLike)) {
+  console.log(x);
+};
+
+// 对象
+let es = {
+  edition: 6,
+  committee: "TC39",
+  standard: "ECMA-262"
+};
+for(let i of Object.keys(arrayLike)){
+  console.log(i+':'+arrayLike[i]);
+};
+
+// 与其他遍历语法的比较
+
+// 跳出循环的例子:
+for (var n of [1,2,3,4]) {
+  if (n > 1000)
+    break;
+  console.log(n);
+};

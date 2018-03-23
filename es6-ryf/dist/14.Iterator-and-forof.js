@@ -154,35 +154,18 @@ var arr2 = ['b', 'c'];
 
 // 3）yield*
 // yield*后面跟的是一个可遍历的结构，它会调用该结构的遍历器接口
-var generator = /*#__PURE__*/regeneratorRuntime.mark(function generator() {
-  return regeneratorRuntime.wrap(function generator$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          _context.next = 2;
-          return 1;
-
-        case 2:
-          return _context.delegateYield([2, 3, 4], 't0', 3);
-
-        case 3:
-          _context.next = 5;
-          return 5;
-
-        case 5:
-        case 'end':
-          return _context.stop();
-      }
-    }
-  }, generator, this);
-});
+/*let generator = function* () {
+  yield 1;
+  yield* [2,3,4];
+  yield 5;
+};
 var iterator = generator();
-iterator.next(); // { value: 1, done: false }
-iterator.next(); // { value: 2, done: false }
-iterator.next(); // { value: 3, done: false }
-iterator.next(); // { value: 4, done: false }
-iterator.next(); // { value: 5, done: false }
-iterator.next(); // { value: undefined, done: true }
+iterator.next() // { value: 1, done: false }
+iterator.next() // { value: 2, done: false }
+iterator.next() // { value: 3, done: false }
+iterator.next() // { value: 4, done: false }
+iterator.next() // { value: 5, done: false }
+iterator.next() // { value: undefined, done: true }*/
 
 // 4）其他场合
 /*
@@ -204,51 +187,15 @@ iterator.next(); // { value: "i", done: false }
 iterator.next(); // { value: undefined, done: true }
 
 /* 5.Iterator 接口与 Generator 函数 */
-var obj3 = _defineProperty({}, Symbol.iterator, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-  return regeneratorRuntime.wrap(function _callee$(_context2) {
-    while (1) {
-      switch (_context2.prev = _context2.next) {
-        case 0:
-          _context2.next = 2;
-          return 'hello';
-
-        case 2:
-          _context2.next = 4;
-          return 'world';
-
-        case 4:
-        case 'end':
-          return _context2.stop();
-      }
-    }
-  }, _callee, this);
-}));
-var _iteratorNormalCompletion2 = true;
-var _didIteratorError2 = false;
-var _iteratorError2 = undefined;
-
-try {
-  for (var _iterator2 = obj[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-    var _x = _step2.value;
-
-    console.log(_x);
+/*let obj3 = {
+  * [Symbol.iterator]() {
+    yield 'hello';
+    yield 'world';
   }
-} catch (err) {
-  _didIteratorError2 = true;
-  _iteratorError2 = err;
-} finally {
-  try {
-    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-      _iterator2.return();
-    }
-  } finally {
-    if (_didIteratorError2) {
-      throw _iteratorError2;
-    }
-  }
-}
-
-;
+};
+for (let x of obj3) {
+  console.log(x);
+};*/
 
 /* 6.遍历器对象的 return()，throw() */
 // return():
@@ -272,16 +219,70 @@ function readLinesSync(file) {
 }
 // 三种情况，都会触发执行return方法:
 // 情况一
+/*for (let line of readLinesSync(fileName)) {
+  console.log(line);
+  break;
+};
+// 情况二
+for (let line of readLinesSync(fileName)) {
+  console.log(line);
+  continue;
+};
+// 情况三
+for (let line of readLinesSync(fileName)) {
+  console.log(line);
+  throw new Error();
+};*/
+
+/* 7.for...of 循环 */
+// 遍历所有数据结构的统一的方法
+// 一个数据结构只要部署了Symbol.iterator属性，就被视为具有 iterator 接口，
+// 就可以用for...of循环遍历它的成员。也就是说，for...of循环内部调用的是数据结构的Symbol.iterator方法
+
+// for...of循环可以使用的范围包括数组、Set 和 Map 结构、某些类似数组的对象
+// （比如arguments对象、DOM NodeList 对象）、后文的 Generator 对象，以及字符串
+
+// 数组:
+console.clear();
+var array1 = [3, 2, 4, 6, 'lee'];
+var _iteratorNormalCompletion2 = true;
+var _didIteratorError2 = false;
+var _iteratorError2 = undefined;
+
+try {
+  for (var _iterator2 = array1[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+    var i = _step2.value;
+
+    console.log(i);
+  }
+} catch (err) {
+  _didIteratorError2 = true;
+  _iteratorError2 = err;
+} finally {
+  try {
+    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+      _iterator2.return();
+    }
+  } finally {
+    if (_didIteratorError2) {
+      throw _iteratorError2;
+    }
+  }
+}
+
+;
+
+// Set 和 Map 结构:
+var engines = new Set(["Gecko", "Trident", "Webkit", "Webkit"]);
 var _iteratorNormalCompletion3 = true;
 var _didIteratorError3 = false;
 var _iteratorError3 = undefined;
 
 try {
-  for (var _iterator3 = readLinesSync(fileName)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-    var line = _step3.value;
+  for (var _iterator3 = engines[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+    var e = _step3.value;
 
-    console.log(line);
-    break;
+    console.log(e);
   }
 } catch (err) {
   _didIteratorError3 = true;
@@ -299,17 +300,22 @@ try {
 }
 
 ;
-// 情况二
+
+var es6 = new Map();
+es6.set("edition", 6);
+es6.set("committee", "TC39");
+es6.set("standard", "ECMA-262");
 var _iteratorNormalCompletion4 = true;
 var _didIteratorError4 = false;
 var _iteratorError4 = undefined;
 
 try {
-  for (var _iterator4 = readLinesSync(fileName)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-    var _line = _step4.value;
+  for (var _iterator4 = es6[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+    var _step4$value = _slicedToArray(_step4.value, 2),
+        name = _step4$value[0],
+        value = _step4$value[1];
 
-    console.log(_line);
-    continue;
+    console.log(name + ": " + value);
   }
 } catch (err) {
   _didIteratorError4 = true;
@@ -327,17 +333,17 @@ try {
 }
 
 ;
-// 情况三
+
+var map = new Map().set('a', 1).set('b', 2);
 var _iteratorNormalCompletion5 = true;
 var _didIteratorError5 = false;
 var _iteratorError5 = undefined;
 
 try {
-  for (var _iterator5 = readLinesSync(fileName)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-    var _line2 = _step5.value;
+  for (var _iterator5 = map[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+    var pair = _step5.value;
 
-    console.log(_line2);
-    throw new Error();
+    console.log(pair);
   }
 } catch (err) {
   _didIteratorError5 = true;
@@ -355,13 +361,233 @@ try {
 }
 
 ;
+// ['a', 1]
+// ['b', 2]
 
-/* 7.for...of 循环 */
-// 遍历所有数据结构的统一的方法
-// 一个数据结构只要部署了Symbol.iterator属性，就被视为具有 iterator 接口，
-// 就可以用for...of循环遍历它的成员。也就是说，for...of循环内部调用的是数据结构的Symbol.iterator方法
+var _iteratorNormalCompletion6 = true;
+var _didIteratorError6 = false;
+var _iteratorError6 = undefined;
 
-// for...of循环可以使用的范围包括数组、Set 和 Map 结构、某些类似数组的对象
-// （比如arguments对象、DOM NodeList 对象）、后文的 Generator 对象，以及字符串
+try {
+  for (var _iterator6 = map[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+    var _step6$value = _slicedToArray(_step6.value, 2),
+        key = _step6$value[0],
+        _value = _step6$value[1];
 
-// 数组:
+    console.log(key + ' : ' + _value);
+  }
+} catch (err) {
+  _didIteratorError6 = true;
+  _iteratorError6 = err;
+} finally {
+  try {
+    if (!_iteratorNormalCompletion6 && _iterator6.return) {
+      _iterator6.return();
+    }
+  } finally {
+    if (_didIteratorError6) {
+      throw _iteratorError6;
+    }
+  }
+}
+
+;
+// a : 1
+// b : 2
+
+// 计算生成的数据结构
+// entries()
+// keys()
+// values()
+var arrs = ['a', 'c', 'q'];
+var _iteratorNormalCompletion7 = true;
+var _didIteratorError7 = false;
+var _iteratorError7 = undefined;
+
+try {
+  for (var _iterator7 = arrs.keys()[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+    var _i2 = _step7.value;
+
+    console.log(_i2);
+  }
+} catch (err) {
+  _didIteratorError7 = true;
+  _iteratorError7 = err;
+} finally {
+  try {
+    if (!_iteratorNormalCompletion7 && _iterator7.return) {
+      _iterator7.return();
+    }
+  } finally {
+    if (_didIteratorError7) {
+      throw _iteratorError7;
+    }
+  }
+}
+
+;
+
+// 类似数组的对象
+// 字符串、DOM NodeList 对象、arguments对象
+
+// 字符串
+var str1 = "hello";
+var _iteratorNormalCompletion8 = true;
+var _didIteratorError8 = false;
+var _iteratorError8 = undefined;
+
+try {
+  for (var _iterator8 = str1[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+    var s = _step8.value;
+
+    console.log(s); // h e l l o
+  }
+} catch (err) {
+  _didIteratorError8 = true;
+  _iteratorError8 = err;
+} finally {
+  try {
+    if (!_iteratorNormalCompletion8 && _iterator8.return) {
+      _iterator8.return();
+    }
+  } finally {
+    if (_didIteratorError8) {
+      throw _iteratorError8;
+    }
+  }
+}
+
+;
+
+// DOM NodeList对象
+var paras = document.querySelectorAll("p");
+var _iteratorNormalCompletion9 = true;
+var _didIteratorError9 = false;
+var _iteratorError9 = undefined;
+
+try {
+  for (var _iterator9 = paras[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+    var p = _step9.value;
+
+    p.classList.add("test");
+  }
+} catch (err) {
+  _didIteratorError9 = true;
+  _iteratorError9 = err;
+} finally {
+  try {
+    if (!_iteratorNormalCompletion9 && _iterator9.return) {
+      _iterator9.return();
+    }
+  } finally {
+    if (_didIteratorError9) {
+      throw _iteratorError9;
+    }
+  }
+}
+
+;
+
+// arguments对象
+function printArgs() {
+  var _iteratorNormalCompletion10 = true;
+  var _didIteratorError10 = false;
+  var _iteratorError10 = undefined;
+
+  try {
+    for (var _iterator10 = arguments[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
+      var _x = _step10.value;
+
+      console.log(_x);
+    }
+  } catch (err) {
+    _didIteratorError10 = true;
+    _iteratorError10 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion10 && _iterator10.return) {
+        _iterator10.return();
+      }
+    } finally {
+      if (_didIteratorError10) {
+        throw _iteratorError10;
+      }
+    }
+  }
+};
+printArgs('a', 'b');
+// 'a'
+// 'b'
+
+// 并不是所有类似数组的对象都具有 Iterator 接口，一个简便的解决方法，
+// 就是使用Array.from方法将其转为数组。
+var arrayLike = { length: 2, 0: 'a', 1: 'b' };
+var _iteratorNormalCompletion11 = true;
+var _didIteratorError11 = false;
+var _iteratorError11 = undefined;
+
+try {
+  for (var _iterator11 = Array.from(arrayLike)[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
+    var _x2 = _step11.value;
+
+    console.log(_x2);
+  }
+} catch (err) {
+  _didIteratorError11 = true;
+  _iteratorError11 = err;
+} finally {
+  try {
+    if (!_iteratorNormalCompletion11 && _iterator11.return) {
+      _iterator11.return();
+    }
+  } finally {
+    if (_didIteratorError11) {
+      throw _iteratorError11;
+    }
+  }
+}
+
+;
+
+// 对象
+var es = {
+  edition: 6,
+  committee: "TC39",
+  standard: "ECMA-262"
+};
+var _iteratorNormalCompletion12 = true;
+var _didIteratorError12 = false;
+var _iteratorError12 = undefined;
+
+try {
+  for (var _iterator12 = Object.keys(arrayLike)[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
+    var _i3 = _step12.value;
+
+    console.log(_i3 + ':' + arrayLike[_i3]);
+  }
+} catch (err) {
+  _didIteratorError12 = true;
+  _iteratorError12 = err;
+} finally {
+  try {
+    if (!_iteratorNormalCompletion12 && _iterator12.return) {
+      _iterator12.return();
+    }
+  } finally {
+    if (_didIteratorError12) {
+      throw _iteratorError12;
+    }
+  }
+}
+
+;
+
+// 与其他遍历语法的比较
+
+// 跳出循环的例子:
+var _arr = [1, 2, 3, 4];
+for (var _i = 0; _i < _arr.length; _i++) {
+  var n = _arr[_i];
+  if (n > 1000) break;
+  console.log(n);
+};
