@@ -6,6 +6,14 @@
  */
 
 /* 1.简介 */
+// 异步编程解决方案,返回指向内部状态的指针对象(遍历器对象)
+function* helloWorldGenerator(){
+	yield 'hello';
+	yield 'world';
+	return 'ending';
+}
+var hw=helloWorldGenerator();
+
 /* 2.next 方法的参数 */
 /* 3.for...of 循环 */
 /* 4.Generator.prototype.throw() */
