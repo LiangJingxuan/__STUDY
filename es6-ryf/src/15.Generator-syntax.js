@@ -387,8 +387,51 @@ var clock = function* () {
 };
 
 // Generator 与协程
-// 1）协程与子例程的差异++++++++++++++++++++
+// 1）协程与子例程的差异
+// 2）协程与普通线程的差异
 
+// Generator 与上下文
 
 /* 11.应用 */
+// 1）异步操作的同步化表达
+function* loadUI() {
+  showLoadingScreen();
+  yield loadUIDataAsynchronously();
+  hideLoadingScreen();
+}
+var loader = loadUI();
+// 加载UI
+loader.next()
+// 卸载UI
+loader.next()
+
+// Ajax 是典型的异步操作，通过 Generator 函数部署 Ajax 操作，可以用同步的方式表达
+function* main() {
+  var result = yield request("http://some.url");
+  var resp = JSON.parse(result);
+    console.log(resp.value);
+}
+function request(url) {
+  makeAjaxCall(url, function(response){
+    it.next(response);
+  });
+}
+var it = main();
+it.next();
+
+// 2）控制流管理
+// 封装了一个任务的多个步骤
+let steps = [step1Func, step2Func, step3Func];
+function* iterateSteps(steps){
+  for (var i=0; i< steps.length; i++){
+    var step = steps[i];
+    yield step();
+  }
+};
+
+// 3）部署 Iterator 接口
+// 利用 Generator 函数，可以在任意对象上部署 Iterator 接口
+
+// 4）作为数据结构
+
 

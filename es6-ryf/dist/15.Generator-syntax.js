@@ -32,7 +32,10 @@ var _marked = /*#__PURE__*/regeneratorRuntime.mark(helloWorldGenerator),
     _marked18 = /*#__PURE__*/regeneratorRuntime.mark(iterTree),
     _marked19 = /*#__PURE__*/regeneratorRuntime.mark(inorder),
     _marked20 = /*#__PURE__*/regeneratorRuntime.mark(g),
-    _marked21 = /*#__PURE__*/regeneratorRuntime.mark(gen);
+    _marked21 = /*#__PURE__*/regeneratorRuntime.mark(gen),
+    _marked22 = /*#__PURE__*/regeneratorRuntime.mark(loadUI),
+    _marked23 = /*#__PURE__*/regeneratorRuntime.mark(main),
+    _marked24 = /*#__PURE__*/regeneratorRuntime.mark(iterateSteps);
 
 function helloWorldGenerator() {
   return regeneratorRuntime.wrap(function helloWorldGenerator$(_context) {
@@ -1098,7 +1101,104 @@ var clock = /*#__PURE__*/regeneratorRuntime.mark(function clock() {
 });
 
 // Generator 与协程
-// 1）协程与子例程的差异++++++++++++++++++++
+// 1）协程与子例程的差异
+// 2）协程与普通线程的差异
 
+// Generator 与上下文
 
 /* 11.应用 */
+// 1）异步操作的同步化表达
+function loadUI() {
+  return regeneratorRuntime.wrap(function loadUI$(_context31) {
+    while (1) {
+      switch (_context31.prev = _context31.next) {
+        case 0:
+          showLoadingScreen();
+          _context31.next = 3;
+          return loadUIDataAsynchronously();
+
+        case 3:
+          hideLoadingScreen();
+
+        case 4:
+        case 'end':
+          return _context31.stop();
+      }
+    }
+  }, _marked22, this);
+}
+var loader = loadUI();
+// 加载UI
+loader.next();
+// 卸载UI
+loader.next();
+
+// Ajax 是典型的异步操作，通过 Generator 函数部署 Ajax 操作，可以用同步的方式表达
+function main() {
+  var result, resp;
+  return regeneratorRuntime.wrap(function main$(_context32) {
+    while (1) {
+      switch (_context32.prev = _context32.next) {
+        case 0:
+          _context32.next = 2;
+          return request("http://some.url");
+
+        case 2:
+          result = _context32.sent;
+          resp = JSON.parse(result);
+
+          console.log(resp.value);
+
+        case 5:
+        case 'end':
+          return _context32.stop();
+      }
+    }
+  }, _marked23, this);
+}
+function request(url) {
+  makeAjaxCall(url, function (response) {
+    it.next(response);
+  });
+}
+var it = main();
+it.next();
+
+// 2）控制流管理
+// 封装了一个任务的多个步骤
+var steps = [step1Func, step2Func, step3Func];
+function iterateSteps(steps) {
+  var i, step;
+  return regeneratorRuntime.wrap(function iterateSteps$(_context33) {
+    while (1) {
+      switch (_context33.prev = _context33.next) {
+        case 0:
+          i = 0;
+
+        case 1:
+          if (!(i < steps.length)) {
+            _context33.next = 8;
+            break;
+          }
+
+          step = steps[i];
+          _context33.next = 5;
+          return step();
+
+        case 5:
+          i++;
+          _context33.next = 1;
+          break;
+
+        case 8:
+        case 'end':
+          return _context33.stop();
+      }
+    }
+  }, _marked24, this);
+};
+
+// 3）部署 Iterator 接口
+// 利用 Generator 函数，可以在任意对象上部署 Iterator 接口
+
+// 4）作为数据结构
