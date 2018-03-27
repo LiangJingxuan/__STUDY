@@ -244,4 +244,4 @@ class Rectangle {
     this.width = width;
   }
 }
-var obj = new Rectangle(3, 4); // 输出 true
+var objs = new Rectangle(3, 4); // 输出 true
