@@ -7,7 +7,7 @@
 
 <b>2.2.1 Microsoft Windows系统上安装Node.js</b>
 
-在 Windows 上安装 Node.js 十分方便，你只需要访问http://nodejs.org， 点击Download链接，然后选择Windows Installer，下载安装包。点击Next即可自动完成安装。安装程序不会询问你安装路径，Node.js 会被自动安装到 C:\Program Files\nodejs 或C:\Program Files (x86)\nodejs（64位系统）目录下，并且会在系统的 PATH 环境变量中增加该目录，因此我们可以在 Windows 的命令提示符中直接运行 node。
+在 Windows 上安装 Node.js 十分方便，你只需要访问http://nodejs.org 点击Download链接，然后选择Windows Installer，下载安装包。点击Next即可自动完成安装。安装程序不会询问你安装路径，Node.js 会被自动安装到 C:\Program Files\nodejs 或C:\Program Files (x86)\nodejs（64位系统）目录下，并且会在系统的 PATH 环境变量中增加该目录，因此我们可以在 Windows 的命令提示符中直接运行 node。
 
 为了测试是否已经安装成功，我们在运行中输入 cmd，打开命令提示符，然后输入 node，将会进入 Node.js 的交互模式。
 
