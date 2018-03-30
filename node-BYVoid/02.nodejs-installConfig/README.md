@@ -23,7 +23,9 @@ Node.js 目前还处在快速变化的时期，它的发行速度要远远大于
     <thead>
     <tr>
         <td>Linux 发行版</td>
-        <td>命 令</td>
+    </tr>
+    <tr>
+    	<td>命 令</td>
     </tr>
     </thead>
     <tbody>
