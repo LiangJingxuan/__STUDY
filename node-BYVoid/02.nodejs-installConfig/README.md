@@ -23,23 +23,25 @@ Node.js 目前还处在快速变化的时期，它的发行速度要远远大于
     <thead>
     <tr>
         <td>Linux 发行版</td>
-    </tr>
-    <tr>
-    	<td>命 令</td>
+        <td>命 令</td>
     </tr>
     </thead>
     <tbody>
     <tr>
     	<td>Debian/Ubuntu</td>
-    	<td>Fedora/RHEL/CentOS/Scientific Linux</td>
-    	<td>openSUSE</td>
-    	<td>Arch Linux</td>
+    	<td>apt-get install nodejs</td>
 	</tr>
 	<tr>
-    	<td>apt-get install nodejs</td>
-    	<td>yum install nodejs</td>
-    	<td>zypper install nodejs</td>
-    	<td>pacman -S nodejs</td>
+		<td>Fedora/RHEL/CentOS/Scientific Linux</td>
+		<td>yum install nodejs</td>
+	</tr>
+	<tr>
+		<td>openSUSE</td>
+		<td>zypper install nodejs</td>
+	</tr>
+	<tr>
+		<td>Arch Linux</td>
+		<td>pacman -S nodejs</td>
 	</tr>
 	</tbody>
 </table>
