@@ -1,115 +1,54 @@
-<h3>0、前注</h3>
+<h3>1.1、Node.js 是什么</h3>
 
-本文内容源于[webpack中文文档](https://doc.webpack-china.org/concepts/)，以及我自己实践中写的若干DEMO。
+Node.js 不是一种独立的语言，Node.js 也不是一个 JavaScript 框架，Node.js 更不是浏览器端的库，Node.js 是一个让 JavaScript 
 
-每个DEMO以文件夹为单位，从入门到进阶，根据文件夹编号为准，逐步递进。
+运行在服务端的开发平台，它让 JavaScript 成为脚本语言世界的一等公民，在服务端堪与 PHP、Python、Perl、Ruby 平起平坐。
 
-成文时，webpack版本是【3.8.1】
+Node.js 可以作为服务器向用户提供服务，Node.js 的许多设计理念与经典架构（如 LAMP）有着很大的不同，可提供强大的伸缩能力，以适应
 
-<h3>0.1、安装webpack</h3>
+21世纪10年代以后规模越来越庞大的互联网环境。
 
-首先你需要安装Node.js，[点击打开Node.js下载页面](https://nodejs.org/zh-cn/download/)。安装完Node.js后，会自带npm包管理器。
+Node.js 不包含 DOM、BOM 或者 Client JavaScript。这是因为 Node.js 不运行在浏览器中，所以不需要使用浏览器中的许多特性Node.js 不运行
 
->npm install webpack -g
+在浏览器中，所以也就不存在 JavaScript 的浏览器兼容性问题 可以使用 JavaScript 语言的所有特性。
 
-这个命令将安装最新版本的webpack（全局，学习教程中推荐，避免多次安装。但实践中还是有必要一个项目一个webpack，避免版本冲突带来的bug）
 
-目前版本是3.8.1（2017/11/27）
+<h3>1.2、Node.js 能做什么</h3>
 
->webpack -v
+正如 JavaScript 为客户端而生，Node.js 为网络而生。Node.js 能做的远不止开发一个网站那么简单，使用 Node.js，你可以轻松地开发：
 
-查看当前webpack版本
+	 具有复杂逻辑的网站；
 
-<b>执行命令：</b>
+	 基于社交网络的大规模 Web 应用；
 
-以下执行webpack命令时，指在对应文件夹下，通过控制台执行命令。
+	 Web Socket 服务器；
 
-<b>快速抵达对应目录的控制台（win）：</b>
+	 TCP/UDP 套接字应用程序；
 
-在对应目录下，按住 ``shift``，然后点击鼠标右键，在弹窗里选择``在此处打开命令窗口``即可启用
+	 命令行工具；
 
-<b>MAC 快速打开某个目录的终端：</b>
+	 交互式终端程序；
 
-参考[这个链接](https://blog.phpgao.com/open_terminal_in_finder.html)
+	 带有图形用户界面的本地应用程序；
 
-<h3>0.2、命令执行</h3>
+	 单元测试工具；
 
->安装（fork项目后，第一次运行每个项目之前，都需要执行一遍）
+	 客户端 JavaScript 编译器。
 
-```
-npm install
-```
 
-> 执行（不同项目，执行的命令可能不同，参照每个项目的文档，或者 package.json 里的 scripts 里的值）
+<h3>1.3、异步式 I/O 与事件驱动</h3>
 
-```
-// 一般使用（没有特殊要求，表示这个只是为了熟悉功能）
-npm run test
+Node.js 最大的特点就是采用异步式 I/O 与事件驱动的架构设计。对于高并发的解决方案，传统的架构是多线程模型，也就是为每个业务逻辑
 
-// 开发环境使用（从 7、HMR 一节开始添加，）
-npm run dev
+提供一个系统线程，通过系统线程切换来弥补同步式 I/O 调用时的时间开销。Node.js 使用的是单线程模型，对于所有 I/O 都采用异步式的
 
-// 生产环境使用（一般用于实战项目，或该项目同时有开发和生产两个版本的webpack配置）
-npm run build
-```
+请求方式，避免了频繁的上下文切换。Node.js 在执行的过程中会维护一个事件队列，程序在执行时进入事件循环等待下一个事件到来，每个异
 
-<h3>0.3、webpack的版本</h3>
+步式 I/O 请求完成后会被推送到事件队列，等待程序进程进行处理。
 
-当我们全局安装webpack之后，package.json 里也会有webpack，这两个webpack的版本，可能是不一样的。
 
-那么当我们打包的时候，如何确认当前使用的是哪一个webpack版本呢？
+<h3>1.4、Node.js 的性能</h3>
 
-<b>使用全局的webpack的版本</b>
+Node.js 用异步式 I/O 和事件驱动代替多线程，带来了可观的性能提升。Node.js 除了使用 V8 作为JavaScript引擎以外，还使用了高效
 
-通过直接执行 ``webpack`` 命令，将使用全局的 webpack 版本
-
-```
-webpack
-```
-
-<b>使用当前项目的webpack版本</b>
-
-当我们通过 ``npm`` 命令来执行时，将使用当前项目的 webpack 版本。
-
-例如：
-
-```
-npm run build
-```
-
-就将使用 ``node_modules`` 里面的 webpack 的版本。
-
-<h3>0.4、快捷链接，点击快速抵达对应项目目录</h3>
-
-[1、最简单的webpack实例](https://github.com/qq20004604/webpack-study/tree/master/1%E3%80%81%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84webpack%E5%AE%9E%E4%BE%8B)
-
-[2、简单指令（npm脚本）](https://github.com/qq20004604/webpack-study/tree/master/2%E3%80%81%E7%AE%80%E5%8D%95%E6%8C%87%E4%BB%A4%EF%BC%88npm%E8%84%9A%E6%9C%AC%EF%BC%89)
-
-[3、入口（多入口）](https://github.com/qq20004604/webpack-study/tree/master/3%E3%80%81%E5%85%A5%E5%8F%A3%EF%BC%88%E5%A4%9A%E5%85%A5%E5%8F%A3%EF%BC%89)
-
-[4、出口](https://github.com/qq20004604/webpack-study/tree/master/4%E3%80%81%E5%87%BA%E5%8F%A3)
-
-[5、Loader](https://github.com/qq20004604/webpack-study/tree/master/5%E3%80%81Loader)
-
-1. [babel-loader](https://github.com/qq20004604/webpack-study/tree/master/5%E3%80%81Loader/babel_loader)：用于将es6、es7等语法，转换为es5语法；
-2. [css-loader](https://github.com/qq20004604/webpack-study/tree/master/5%E3%80%81Loader/css_loader)：用于处理css文件（主要是处理图片的url）；
-3. [style-loader](https://github.com/qq20004604/webpack-study/tree/master/5%E3%80%81Loader/style_loader)：将转换后的css文件以 style 标签形式插入 html 中；
-4. [postcss-loader](https://github.com/qq20004604/webpack-study/tree/master/5%E3%80%81Loader/postcss_loader)：一般用于添加兼容性属性前缀；
-5. [less-loader](https://github.com/qq20004604/webpack-study/tree/master/5%E3%80%81Loader/less_loader)：以 less 语法来写 css ；
-6. [url-loader](https://github.com/qq20004604/webpack-study/tree/master/5%E3%80%81Loader/url_loader)：用于将图片小于一定大小的文件，转为 base64 字符串；
-7. [file-loader](https://github.com/qq20004604/webpack-study/tree/master/5%E3%80%81Loader/file_loader)：``url-loader`` 不能转换 base64字符串 的文件，被这个处理（主要用于设置打包后图片路径，以及CDN等）；
-8. [html-withimg-loader](https://github.com/qq20004604/webpack-study/tree/master/5%E3%80%81Loader/html_withimg_loader)：用于加载html模板；
-
-[6、开发环境](https://github.com/qq20004604/webpack-study/tree/master/6%E3%80%81%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83)
-
-[7、HMR 模块热加载](https://github.com/qq20004604/webpack-study/tree/master/7%E3%80%81HMR%20%E6%A8%A1%E5%9D%97%E7%83%AD%E5%8A%A0%E8%BD%BD)
-
-[【实战１】打包一个CDN引入的jQuery项目](https://github.com/qq20004604/webpack-study/tree/master/%E3%80%90%E5%AE%9E%E6%88%98%EF%BC%91%E3%80%91%E6%89%93%E5%8C%85%E4%B8%80%E4%B8%AACDN%E5%BC%95%E5%85%A5%E7%9A%84jQuery%E9%A1%B9%E7%9B%AE)
-
-[【实战２】打包一个bootstrap项目（打包文件带hash）](https://github.com/qq20004604/webpack-study/tree/master/%E3%80%90%E5%AE%9E%E6%88%98%EF%BC%92%E3%80%91%E6%89%93%E5%8C%85%E4%B8%80%E4%B8%AAbootstrap%E9%A1%B9%E7%9B%AE%EF%BC%88%E6%89%93%E5%8C%85%E6%96%87%E4%BB%B6%E5%B8%A6hash%EF%BC%89)
-
-[【实战３】打包有es6、es7语法的js代码](https://github.com/qq20004604/webpack-study/tree/master/%E3%80%90%E5%AE%9E%E6%88%98%EF%BC%93%E3%80%91%E6%89%93%E5%8C%85%E6%9C%89es6%E3%80%81es7%E8%AF%AD%E6%B3%95%E7%9A%84js%E4%BB%A3%E7%A0%81)
-
-[【实战４】打包带异步加载功能的模块](https://github.com/qq20004604/webpack-study/tree/master/%E3%80%90%E5%AE%9E%E6%88%98%EF%BC%94%E3%80%91%E6%89%93%E5%8C%85%E5%B8%A6%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD%E5%8A%9F%E8%83%BD%E7%9A%84%E6%A8%A1%E5%9D%97)
-
-[【实战５】打包一个具有常见功能的多页项目](https://github.com/qq20004604/webpack-study/tree/master/%E3%80%90%E5%AE%9E%E6%88%98%EF%BC%95%E3%80%91%E6%89%93%E5%8C%85%E4%B8%80%E4%B8%AA%E5%85%B7%E6%9C%89%E5%B8%B8%E8%A7%81%E5%8A%9F%E8%83%BD%E7%9A%84%E5%A4%9A%E9%A1%B5%E9%A1%B9%E7%9B%AE)
+的 libev 和 libeio 库支持事件驱动和异步式 I/O。
