@@ -130,7 +130,7 @@ package.json 是 CommonJS 规定的用来描述包的文件，完全符合规范
 
 	 repositories：仓库托管地址数组，每个元素要包含 type （仓库的类型，如 git ）、url （仓库的地址）和 path （相对于仓库的路径，可选）字段。
 
-	 dependencies：包的依赖，一个关联数组，由包名称和版本号组成。
+	 dependencies：包的依赖，一个关联数组，由包名称和版本号组成。 
 
 <b>3.3.4 Node.js 包管理器</b>
 
