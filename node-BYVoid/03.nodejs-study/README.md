@@ -172,3 +172,19 @@ npm是 Node.js 官方提供的包管理工具，它已经成了 Node.js 包的�
 
 
 <h3>3.4 调试</h3>
+
+<b>3.4.1 命令行调试</b>
+
+Node.js 支持命令行下的单步调试。在命令行下执行 node debug debug.js，将会启动调试工具。
+
+<b>3.4.2 远程调试</b>
+
+远程调试：在命令行下使用以下两个语句之一可以打开调试服务器： node --debug[=port] script.js | node --debug-brk[=port] script.js。
+
+<b>3.4.3 使用 Eclipse 调试 Node.js</b>
+
+<b>3.4.4 使用 node-inspector 调试 Node.js</b>
+
+使用 npm install -g node-inspector 命令安装 node-inspector，然后在终端中通过 node --debug-brk=5858 debug.js 命令连接你要除错的脚本的调试服务器，启动 node-inspector： $ node-inspector 。
+node-inspector 使用了 WebKit Web Inspector，因此只能在 Chrome、Safari 等 WebKit 内核的浏览器中使用，而不支持 Firefox 或 Internet Explorer。
+
