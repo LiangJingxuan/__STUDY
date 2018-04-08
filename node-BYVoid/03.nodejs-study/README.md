@@ -98,39 +98,39 @@ Node.js 的事件循环机制：Node.js 程序由事件循环开始，到事件�
 
 包是在模块基础上更深一步的抽象，Node.js 的包类似于 C/C++ 的函数库或者 Java/.Net的类库。它将某个独立的功能封装起来，用于发布、更新、依赖管理和版本控制。
 
->package.json 必须在包的顶层目录下；
+	 package.json 必须在包的顶层目录下；
 
->二进制文件应该在 bin 目录下；
+	 二进制文件应该在 bin 目录下；
 
->JavaScript 代码应该在 lib 目录下；
+	 JavaScript 代码应该在 lib 目录下；
 
->文档应该在 doc 目录下；
+	 文档应该在 doc 目录下；
 
->单元测试应该在 test 目录下。
+	 单元测试应该在 test 目录下。
 
 1. 作为文件夹的模块 例子：建立一个 somepackage 包, 用 getoackage.js 来使用它。
 2. package.json Node.js 在调用某个包时，会首先检查包中 package.json 文件的 main 字段，将其作为包的接口模块，如果 package.json 或 main 字段不存在，会尝试寻找index.js 或 index.node 作为包的接口。
 package.json 是 CommonJS 规定的用来描述包的文件，完全符合规范的 package.json 文件应该含有以下字段：
 
->name：包的名称，必须是唯一的，由小写英文字母、数字和下划线组成，不能包含空格。
+	 name：包的名称，必须是唯一的，由小写英文字母、数字和下划线组成，不能包含空格。
 
->description：包的简要说明。
+	 description：包的简要说明。
 
->version：符合语义化版本识别规范的版本字符串。
+	 version：符合语义化版本识别规范的版本字符串。
 
->keywords：关键字数组，通常用于搜索。
+	 keywords：关键字数组，通常用于搜索。
 
->maintainers：维护者数组，每个元素要包含 name、email （可选）、web （可选）字段。
+	 maintainers：维护者数组，每个元素要包含 name、email （可选）、web （可选）字段。
 
->contributors：贡献者数组，格式与maintainers相同。包的作者应该是贡献者数组的第一个元素。
+	 contributors：贡献者数组，格式与maintainers相同。包的作者应该是贡献者数组的第一个元素。
 
->bugs：提交bug的地址，可以是网址或者电子邮件地址。
+	 bugs：提交bug的地址，可以是网址或者电子邮件地址。
 
->licenses：许可证数组，每个元素要包含 type （许可证的名称）和 url （链接到许可证文本的地址）字段。
+	 licenses：许可证数组，每个元素要包含 type （许可证的名称）和 url （链接到许可证文本的地址）字段。
 
->repositories：仓库托管地址数组，每个元素要包含 type （仓库的类型，如 git ）、url （仓库的地址）和 path （相对于仓库的路径，可选）字段。
+	 repositories：仓库托管地址数组，每个元素要包含 type （仓库的类型，如 git ）、url （仓库的地址）和 path （相对于仓库的路径，可选）字段。
 
->dependencies：包的依赖，一个关联数组，由包名称和版本号组成。
+	 dependencies：包的依赖，一个关联数组，由包名称和版本号组成。
 
 <b>3.3.4 Node.js 包管理器</b>
 
