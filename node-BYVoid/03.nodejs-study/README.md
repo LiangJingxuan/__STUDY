@@ -89,3 +89,86 @@ Node.js 的事件循环机制：Node.js 程序由事件循环开始，到事件�
 模块是 Node.js 应用程序的基本组成部分，文件和模块是一一对应的。换言之，一个Node.js 文件就是一个模块，这个文件可能是 JavaScript 代码、JSON 或者编译过的 C/C++ 扩展。var http = require('http')，其中 http 是 Node.js 的一个核心模块，其内部是用 C++ 实现的，外部用 JavaScript 封装。通过require 函数获取了这个模块，然后才能使用其中的对象。
 
 <b>3.3.2 创建及加载模块</b>
+
+1. 创建模块：Node.js 提供了 exports 和 require 两个对象，其中 exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获取模块的 exports 对象。
+2. 单次加载：require 不会重复加载模块，也就是说无论调用多少次 require，获得的模块都是同一个。最终输出结果是由后者决定的，后者覆盖前者。
+3. 覆盖exports：
+
+<b>3.3.3 创建包</b>
+
+包是在模块基础上更深一步的抽象，Node.js 的包类似于 C/C++ 的函数库或者 Java/.Net的类库。它将某个独立的功能封装起来，用于发布、更新、依赖管理和版本控制。
+
+> package.json 必须在包的顶层目录下；
+
+> 二进制文件应该在 bin 目录下；
+
+> JavaScript 代码应该在 lib 目录下；
+
+> 文档应该在 doc 目录下；
+
+> 单元测试应该在 test 目录下。
+
+1. 作为文件夹的模块 例子：建立一个 somepackage 包, 用 getoackage.js 来使用它。
+2. package.json Node.js 在调用某个包时，会首先检查包中 package.json 文件的 main 字段，将其作为包的接口模块，如果 package.json 或 main 字段不存在，会尝试寻找index.js 或 index.node 作为包的接口。
+package.json 是 CommonJS 规定的用来描述包的文件，完全符合规范的 package.json 文件应该含有以下字段：
+
+> name：包的名称，必须是唯一的，由小写英文字母、数字和下划线组成，不能包含空格。
+
+> description：包的简要说明。
+
+> version：符合语义化版本识别规范的版本字符串。
+
+> keywords：关键字数组，通常用于搜索。
+
+> maintainers：维护者数组，每个元素要包含 name、email （可选）、web （可选）字段。
+
+> contributors：贡献者数组，格式与maintainers相同。包的作者应该是贡献者数组的第一个元素。
+
+> bugs：提交bug的地址，可以是网址或者电子邮件地址。
+
+> licenses：许可证数组，每个元素要包含 type （许可证的名称）和 url （链接到许可证文本的地址）字段。
+
+> repositories：仓库托管地址数组，每个元素要包含 type （仓库的类型，如 git ）、url （仓库的地址）和 path （相对于仓库的路径，可选）字段。
+
+> dependencies：包的依赖，一个关联数组，由包名称和版本号组成。
+
+<b>3.3.4 Node.js 包管理器</b>
+
+npm是 Node.js 官方提供的包管理工具，它已经成了 Node.js 包的标准发布平台，用于 Node.js 包的发布、传播、依赖控制。npm 提供了命令行工具，使你可以方便地下载、安装、升级、删除包，也可以让你作为开发者发布并维护包。
+
+1. 获取一个包： 例：npm [install/i] [package_name]。 下载好的包放置在当前目录的 node_modules 子目录下。
+2. 本地模式和全局模式： 全局安装->npm [install/i] -g [package_name]，全局安装不能被require使用，全局安装会被PATH环境变量注册，从而使用命令行控制。
+
+<b>本地模式与全局模式</b>
+
+<table>
+    <thead>
+	    <tr>
+	        <td>模 式</td>
+	        <td>可通过 require 使用</td>
+	        <td>注册PATH</td>
+	    </tr>
+    </thead>
+    <tbody>
+	    <tr>
+	    	<td>本地模式</td>
+	    	<td>是</td>
+	    	<td>否</td>
+		</tr>
+		<tr>
+	    	<td>全局模式</td>
+	    	<td>否</td>
+	    	<td>是</td>
+		</tr>
+	</tbody>
+</table>
+
+3. 创建全局链接：npm link 命令使本地require可以引用全局下载的模块（npm link 不支持Windows）。
+4. 包的发布：在发布之前，首先需要让我们的包符合 npm 的规范，npm 有一套以 CommonJS 为基础包规范，但与 CommonJS并不完全一致，其主要差别在于必填字段的不同。通过使用 npm init 可以根据交互式问答产生一个符合标准的 package.json，例如创建一个名为 byvoidmodule 的目录，然后在这个目录中运行npm init，创建一个index.js 作为包的接口，一个简单的包就制作完成了。
+在发布前，我们还需要获得一个账号用于今后维护自己的包，使用 npm adduser 根据提示输入用户名、密码、邮箱，等待账号创建完成。完成后可以使用 npm whoami 测验是	否已经取得了账号。
+接下来，在 package.json 所在目录下运行 npm publish，稍等片刻就可以完成发布了。
+打开浏览器，访问 http://search.npmjs.org/ 就可以找到自己刚刚发布的包了。现在我们可以在世界的任意一台计算机上使用 npm install byvoidmodule 命令来安装它。
+如果你的包将来有更新，只需要在 package.json 文件中修改 version 字段，然后重新使用 npm publish 命令就行了。如果你对已发布的包不满意（比如我们发布的这个毫无意义的包），可以使用 npm unpublish 命令来取消发布。
+
+
+<h3>3.4 调试</h3>
