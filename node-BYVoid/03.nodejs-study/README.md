@@ -166,8 +166,7 @@ npm是 Node.js 官方提供的包管理工具，它已经成了 Node.js 包的�
 3. 创建全局链接：npm link 命令使本地require可以引用全局下载的模块（npm link 不支持Windows）。
 4. 包的发布：在发布之前，首先需要让我们的包符合 npm 的规范，npm 有一套以 CommonJS 为基础包规范，但与 CommonJS并不完全一致，其主要差别在于必填字段的不同。通过使用 npm init 可以根据交互式问答产生一个符合标准的 package.json，例如创建一个名为 byvoidmodule 的目录，然后在这个目录中运行npm init，创建一个index.js 作为包的接口，一个简单的包就制作完成了。
 在发布前，我们还需要获得一个账号用于今后维护自己的包，使用 npm adduser 根据提示输入用户名、密码、邮箱，等待账号创建完成。完成后可以使用 npm whoami 测验是	否已经取得了账号。
-接下来，在 package.json 所在目录下运行 npm publish，稍等片刻就可以完成发布了。
-打开浏览器，访问 http://search.npmjs.org/ 就可以找到自己刚刚发布的包了。现在我们可以在世界的任意一台计算机上使用 npm install byvoidmodule 命令来安装它。
+接下来，在 package.json 所在目录下运行 npm publish，稍等片刻就可以完成发布了。现在我们可以在世界的任意一台计算机上使用 npm install byvoidmodule 命令来安装它。
 如果你的包将来有更新，只需要在 package.json 文件中修改 version 字段，然后重新使用 npm publish 命令就行了。如果你对已发布的包不满意（比如我们发布的这个毫无意义的包），可以使用 npm unpublish 命令来取消发布。
 
 
