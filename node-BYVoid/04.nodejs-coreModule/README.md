@@ -108,8 +108,11 @@ http 提供了一个捷径： http.createServer([requestListener]) ， 功能是
 http.ServerRequest 是 HTTP 请求的信息，它一般由http.Server 的 request 事件发送，作为第一个参数传递，通常简称 request 或 req。
 
 http.ServerRequest 提供了以下3个事件用于控制请求体传输：
+
 >data ：当请求体数据到来时，该事件被触发。该事件提供一个参数 chunk，表示接收到的数据。如果该事件没有被监听，那么请求体将会被抛弃。该事件可能会被调用多次。
+
 >end ：当请求体数据传输完成时，该事件被触发，此后将不会再有数据到来。
+
 >close： 用户当前请求结束时，该事件被触发。不同于 end，如果用户强制终止了传输，也还是调用close。
 
 <b>ServerRequest 的属性</b>
