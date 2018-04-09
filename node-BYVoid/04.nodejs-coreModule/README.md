@@ -62,3 +62,103 @@ error，包含了“错误”的语义，我们在遇到异常的时候通常会
 <b>4.3.3 继承 EventEmitter</b>
 
 大多数时候我们不会直接使用 EventEmitter，而是在对象中继承它。包括 fs、net、http 在内的，只要是支持事件响应的核心模块都是 EventEmitter 的子类。
+
+
+<h3>4.4 文件系统 fs</h3>
+
+fs 模块是文件操作的封装，它提供了文件的读取、写入、更名、删除、遍历目录、链接等 POSIX 文件系统操作。
+
+<b>4.4.1 fs.readFile</b>
+
+读取文件的函数：fs.readFile(filename,[encoding],[callback(err,data)]);
+
+<b>4.4.2 fs.readFileSync</b>
+
+读取文件的函数(同步方法)：fs.readFileSync(filename, [encoding])；
+
+<b>4.4.3 fs.open(不推荐使用)</b>
+
+fs.open(path, flags, [mode], [callback(err, fd)])是 POSIX open 函数的封装，与 C 语言标准库中的 fopen 函数类似。
+
+<b>4.4.4 fs.read(不推荐使用)</b>
+
+fs.read(fd, buffer, offset, length, position, [callback(err, bytesRead,buffer)])是 POSIX read 函数的封装，相比 fs.readFile 提供了更底层的接口。
+
+
+<h3>4.5 HTTP 服务器与客户端</h3>
+
+Node.js 标准库提供了 http 模块，其中封装了一个高效的 HTTP 服务器和一个简易的HTTP 客户端。http.Server 是一个基于事件的 HTTP 服务器，它的核心由 Node.js 下层 C++部分实现，而接口由 JavaScript 封装，兼顾了高性能与简易性。http.request 则是一个HTTP 客户端工具，用于向 HTTP 服务器发起请求，例如实现 Pingback或者内容抓取。
+
+<b>4.5.1 HTTP 服务器</b>
+
+http.Server 是 http 模块中的 HTTP 服务器对象，用 Node.js 做的所有基于 HTTP 协议的系统，如网站、社交应用甚至代理服务器，都是基于 http.Server 实现的。
+
+<b>1. http.Server 的事件</b>
+
+http.Server 是一个基于事件的 HTTP 服务器，所有的请求都被封装为独立的事件，开发者只需要对它的事件编写响应函数即可实现 HTTP 服务器的所有功能。它继承自EventEmitter，提供了以下几个事件：
+
+request：当客户端请求到来时，该事件被触发，提供两个参数 req 和res，分别是http.ServerRequest 和 http.ServerResponse 的实例，表示请求和响应信息。
+connection：当 TCP 连接建立时，该事件被触发，提供一个参数 socket，为net.Socket 的实例。connection 事件的粒度要大于 request，因为客户端在Keep-Alive 模式下可能会在同一个连接内发送多次请求。
+close ：当服务器关闭时，该事件被触发。注意不是在用户连接断开时。
+
+http 提供了一个捷径： http.createServer([requestListener]) ， 功能是创建一个 HTTP 服务器并将requestListener 作为 request 事件的监听函数。
+
+<b>2. http.ServerRequest</b>
+
+http.ServerRequest 是 HTTP 请求的信息，它一般由http.Server 的 request 事件发送，作为第一个参数传递，通常简称 request 或 req。
+
+http.ServerRequest 提供了以下3个事件用于控制请求体传输：
+>data ：当请求体数据到来时，该事件被触发。该事件提供一个参数 chunk，表示接收到的数据。如果该事件没有被监听，那么请求体将会被抛弃。该事件可能会被调用多次。
+>end ：当请求体数据传输完成时，该事件被触发，此后将不会再有数据到来。
+>close： 用户当前请求结束时，该事件被触发。不同于 end，如果用户强制终止了传输，也还是调用close。
+
+<b>ServerRequest 的属性</b>
+
+<table>
+	<thead>
+		<tr>
+			<td>名 称</td>
+			<td>含 义</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>complete</td>
+			<td>客户端请求是否已经发送完成</td>
+		</tr>
+		<tr>
+			<td>httpVersion</td>
+			<td>HTTP 协议版本，通常是 1.0 或 1.1</td>
+		</tr>
+		<tr>
+			<td>method</td>
+			<td>HTTP 请求方法，如 GET、POST、PUT、DELETE 等</td>
+		</tr>
+		<tr>
+			<td>url</td>
+			<td>原始的请求路径，例如 /static/image/x.jpg 或 /user?name=byvoid</td>
+		</tr>
+		<tr>
+			<td>headers</td>
+			<td>HTTP 请求头</td>
+		</tr>
+		<tr>
+			<td>trailers</td>
+			<td>HTTP 请求尾（不常见）</td>
+		</tr>
+		<tr>
+			<td>connection</td>
+			<td>当前 HTTP 连接套接字，为 net.Socket 的实例</td>
+		</tr>
+		<tr>
+			<td>socket</td>
+			<td>connection 属性的别名</td>
+		</tr>
+		<tr>
+			<td>client</td>
+			<td>client 属性的别名</td>
+		</tr>
+	</tbody>
+</table>
+
+<b>3. 获取 GET 请求内容</b>
