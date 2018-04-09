@@ -165,3 +165,5 @@ http.ServerRequest 提供了以下3个事件用于控制请求体传输：
 </table>
 
 <b>3. 获取 GET 请求内容</b>
+
+<b>4. 获取 POST 请求内容</b>
