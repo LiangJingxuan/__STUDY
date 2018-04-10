@@ -6,7 +6,9 @@ MVC （Model-View-Controller，模型视图控制器）是一种软件的�
 型、视图和控制器。
 
  模型是对象及其数据结构的实现，通常包含数据库操作。
+
  视图表示用户界面，在网站中通常就是 HTML 的组织结构。
+
  控制器用于处理用户请求和数据流、复杂模型，将输出传递给视图。
 
 <b>5.1.1 使用 http 模块</b>
@@ -21,6 +23,7 @@ MVC （Model-View-Controller，模型视图控制器）是一种软件的�
 使用全局安装Express，从而使用Quick Start（快速开始）工具，这个工具的功能通常是建立一个网站最小的基础框架，在此基础上完成开发：
 
 >npm install -g express
+
 >npm install -g express-generator
 
 <b>5.2.2 建立工程</b>
