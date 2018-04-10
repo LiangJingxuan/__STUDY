@@ -87,7 +87,7 @@ Express 支持同一路径绑定多个路由响应函数，例如：
 app.all('/user/:username', function(req, res) {
 	res.send('all methods captured');
  });
- 
+
 app.get('/user/:username', function(req, res) {
 	res.send('user: ' + req.params.username);
  });
@@ -136,3 +136,60 @@ app.put('/user/:username', function(req, res) {
 });
 ```
 
+
+<h3>5.4 模板引擎</h3>
+
+<b>5.4.1 什么是模板引擎</b>
+
+<b>5.4.2 使用模板引擎</b>
+
+ejs 的标签系统非常简单，它只有以下3种标签：
+
+ <% code %>：JavaScript 代码。
+
+ <%= code %>：显示替换过 HTML 特殊字符的内容。
+
+ <%- code %>：显示原始 HTML 内容。
+
+<b>5.4.3 页面布局</b>
+
+<b>5.4.4 片段视图</b>
+
+<b>5.4.5 视图助手</b>
+
+Express 提供了一种叫做视图助手的工具，它的功能是允许在视图中访问一个全局的函数或对象，不用每次调用视图解析的时候单独传入。 视图助手有两类，分别是静态视图助手和动态视图助手。这两者的差别在于，静态视图
+助手可以是任何类型的对象，包括接受任意参数的函数，但访问到的对象必须是与用户请求无关的，而动态视图助手只能是一个函数，这个函数不能接受参数，但可以访问 req 和 res 对象。
+
+静态视图助手可以通过 app.helpers() 函数注册，它接受一个对象，对象的每个属性名称为视图助手的名称，属性值对应视图助手的值。动态视图助手则通过 app.dynamicHelpers() 注册，方法与静态视图助手相同，但每个属性的值必须为一个函数，该函数提供 req 和 res。
+
+实例：
+
+```javascript
+var util = require('util');
+
+app.helpers({
+	inspect: function(obj) {
+		return util.inspect(obj, true);
+	}
+});
+
+app.dynamicHelpers({
+	headers: function(req, res) {
+		return req.headers;
+	}
+});
+
+app.get('/helper', function(req, res) {
+	res.render('helper', {
+		title: 'Helpers'
+	});
+});
+```
+
+对应的视图helper、ejs的内容如下：
+
+```ejs
+<%=inspect(headers)%>
+```
+
+视图助手的本质其实就是给所有视图注册了全局变量，因此无需每次在调用模板引擎时传递数据对象。
