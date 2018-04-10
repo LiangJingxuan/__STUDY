@@ -167,3 +167,21 @@ http.ServerRequest 提供了以下3个事件用于控制请求体传输：
 <b>3. 获取 GET 请求内容</b>
 
 <b>4. 获取 POST 请求内容</b>
+
+<b>5. http.ServerResponse</b>
+
+http.ServerResponse 是返回给客户端的信息，决定了用户最终能看到的结果。它也是由 http.Server 的 request 事件发送的，作为第二个参数传递，一般简称为response 或 res。
+http.ServerResponse 有三个重要的成员函数，用于返回响应头、响应内容以及结束请求：
+
+response.writeHead(statusCode, [headers])：向请求的客户端发送响应头。statusCode 是 HTTP 状态码，如 200 （请求成功）、404 （未找到）等。headers是一个类似关联数组的对象，表示响应头的每个属性。该函数在一个请求内最多只能调用一次，如果不调用，则会自动生成一个响应头。
+
+response.write(data, [encoding])：向请求的客户端发送响应内容。data 是一个 Buffer 或字符串，表示要发送的内容。如果 data 是字符串，那么需要指定encoding 来说明它的编码方式，默认是 utf-8。在 response.end 调用之前，response.write 可以被多次调用。
+
+response.end([data], [encoding])：结束响应，告知客户端所有发送已经完成。当所有要返回的内容发送完毕的时候，该函数 必须 被调用一次。它接受两个可选参数，意义和 response.write 相同。如果不调用该函数，客户端将永远处于等待状态。
+
+<b>4.5.2 HTTP 客户端</b>
+
+http 模块提供了两个函数 http.request 和 http.get，功能是作为客户端向 HTTP服务器发起请求。
+
+http.request(options, callback) 发起 HTTP 请求。接受两个参数，option 是一个类似关联数组的对象，表示请求的参数，callback 是请求的回调函数。
+http.get。它是 http.request 的简化版，唯一的区别在于http.get自动将请求方法设为了 GET 请求，同时不需要手动调用 req.end()。
