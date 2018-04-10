@@ -87,6 +87,7 @@ Express 支持同一路径绑定多个路由响应函数，例如：
 app.all('/user/:username', function(req, res) {
 	res.send('all methods captured');
  });
+ 
 app.get('/user/:username', function(req, res) {
 	res.send('user: ' + req.params.username);
  });
@@ -99,6 +100,7 @@ app.all('/user/:username', function(req, res, next) {
 	console.log('all methods captured');
 	next();
  });
+
 app.get('/user/:username', function(req, res) {
 	res.send('user: ' + req.params.username);
  });
@@ -113,6 +115,7 @@ var users = {
 		website: 'http://www.byvoid.com'
 	}
 };
+
 app.all('/user/:username', function(req, res, next) {
 	// 检查用户是否存在
 	if (users[req.params.username]) {
@@ -121,11 +124,13 @@ app.all('/user/:username', function(req, res, next) {
 		next(new Error(req.params.username + ' does not exist.'));
 	}
 });
+
 app.get('/user/:username', function(req, res) {
 	// 用户一定存在，直接展示
 	res.send(JSON.stringify(users[req.params.username]));
 });
-	app.put('/user/:username', function(req, res) {
+
+app.put('/user/:username', function(req, res) {
 	// 修改用户信息
 	res.send('Done');
 });
