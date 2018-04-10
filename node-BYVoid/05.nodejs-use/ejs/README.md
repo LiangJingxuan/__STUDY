@@ -42,10 +42,11 @@ MVC （Model-View-Controller，模型视图控制器）是一种软件的�
 
 查看package.json文件配置信息：
 
-`"scripts": {
+```json
+"scripts": {
     "start": "node ./bin/www"
   }
-`
+```
 
 使用 npm start 命令运行node服务，然后在浏览器中打开输入127.0.0.1:3000来进入页面，显示欢迎页说明安装及设定正确无误。
 
@@ -82,30 +83,31 @@ Express 支持 REST 风格的请求方式，在介绍之前我们先说明一下
 
 Express 支持同一路径绑定多个路由响应函数，例如：
 
-`app.all('/user/:username', function(req, res) {
+```javascript
+app.all('/user/:username', function(req, res) {
 	res.send('all methods captured');
  });
-`
-
-`app.get('/user/:username', function(req, res) {
+app.get('/user/:username', function(req, res) {
 	res.send('user: ' + req.params.username);
- });`
+ });
+```
 
 最前面的会覆盖下面的，使用第三个参数 next 通过调用next()，会将路由控制权转移给后面的规则(先执行第一个在执行后面的)：
 
-`app.all('/user/:username', function(req, res, next) {
+```javascript
+app.all('/user/:username', function(req, res, next) {
 	console.log('all methods captured');
 	next();
  });
-`
-
-`app.get('/user/:username', function(req, res) {
+app.get('/user/:username', function(req, res) {
 	res.send('user: ' + req.params.username);
- });`
+ });
+```
 
 例如：针对一个用户查询信息和修改信息的操作，分别对应了 GET 和 PUT 操作，而两者共有的一个步骤是检查用户名是否合法，因此可以通过 next() 方法实现：
 
-`var users = {
+```javascript
+var users = {
 	'byvoid': {
 		name: 'Carbo',
 		website: 'http://www.byvoid.com'
@@ -126,4 +128,6 @@ app.get('/user/:username', function(req, res) {
 	app.put('/user/:username', function(req, res) {
 	// 修改用户信息
 	res.send('Done');
-});`
+});
+```
+
