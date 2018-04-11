@@ -70,3 +70,33 @@
 <b>5.5.3 界面设计</b>
 
 <b>5.5.4 使用 Bootstrap</b>
+
+<h3>5.6 用户注册和登录</h3>
+
+<b>5.6.1 访问数据库</b>
+
+选用 MongoDB 作为网站的数据库系统，它是一个开源的 NoSQL 数据库，相比MySQL 那样的关系型数据库，它更为轻巧、灵活，非常适合在数据规模很大、事务性不强的场合下使用。
+
+1. NoSQL
+NoSQL 是 1998 年被提出的，它曾经是一个轻量、开源、不提供SQL功能的关系数据库。但现在 NoSQL 被认为是 Not Only SQL 的简称，主要指非关系型、分布式、不提供 ACID的数据库系统。正如它的名称所暗示的，NoSQL 设计初衷并不是为了取代 SQL 数据库的，而是作为一个补充，它和 SQL 数据库有着各自不同的适应领域。NoSQL 不像 SQL 数据库一样都有着统一的架构和接口，不同的 NoSQL 数据库系统从里到外可能完全不同。
+
+2. MongoDB
+MongoDB 是一个对象数据库，它没有表、行等概念，也没有固定的模式和结构，所有的数据以文档的形式存储。所谓文档就是一个关联数组式的对象，它的内部由属性组成，一个属性对应的值可能是一个数、字符串、日期、数组，甚至是一个嵌套的文档。下面是一个MongoDB 文档的示例：
+
+```MongoDB
+	{ "_id" : ObjectId( "4f7fe8432b4a1077a7c551e8" ),
+		"uid" : 2004,
+		"username" : "byvoid",
+		"net9" : { "nickname" : "BYVoid",
+		"surname" : "Kuo",
+		"givenname" : "Carbo",
+		"fullname" : "Carbo Kuo",
+		"emails" : [ "byvoid@byvoid.com", "byvoid.kcp@gmail.com" ],
+		"website" : "http://www.byvoid.com",
+		"address" : "Zijing 2#, Tsinghua University" }
+	}
+```
+
+上面文档中 uid 是一个整数属性，username 是字符串属性，_ id是文档对象的标识符，格式为特定的 ObjectId。net9 是一个嵌套的文档，其内部结构与一般文档无异。从格式来看文档好像 JSON，没错，MongoDB 的数据格式就是 JSON，因此与 JavaScript 的亲和性很强。在 Mongodb 中对数据的操作都是以文档为单位的，当然我们也可以修改文档的部分属性。对于查询操作，我们只需要指定文档的任何一个属性，就可在数据库中将满足条件的所有文档筛选出来。为了加快查询，MongoDB 也对文档实现了索引，这一点和 SQL 数据库一样。
+
+3. 连接数据库
