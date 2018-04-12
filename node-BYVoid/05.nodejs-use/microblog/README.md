@@ -100,3 +100,31 @@ MongoDB 是一个对象数据库，它没有表、行等概念，也没有固定
 上面文档中 uid 是一个整数属性，username 是字符串属性，_ id是文档对象的标识符，格式为特定的 ObjectId。net9 是一个嵌套的文档，其内部结构与一般文档无异。从格式来看文档好像 JSON，没错，MongoDB 的数据格式就是 JSON，因此与 JavaScript 的亲和性很强。在 Mongodb 中对数据的操作都是以文档为单位的，当然我们也可以修改文档的部分属性。对于查询操作，我们只需要指定文档的任何一个属性，就可在数据库中将满足条件的所有文档筛选出来。为了加快查询，MongoDB 也对文档实现了索引，这一点和 SQL 数据库一样。
 
 3. 连接数据库
+
+首先在本地项目安装模块：
+
+>npm install mongodb
+
+接下来在工程的目录中创建 settings.js 文件，这个文件用于保存数据库的连接信息。Settings.js文件的内容如下：
+db 是数据库的名称，host 是数据库的地址。cookieSecret 用于 Cookie 加密与数据库无关。
+
+```javascript
+	module.exports = {
+		cookieSecret: 'microblogbyvoid',
+		db: 'microblog',
+		host: 'localhost',
+	};
+```
+
+接下来在根目录下创建 models 子目录，在models文件夹下创建 db.js(通过 module.exports 输出了创建的数据库连接)，内容是：
+
+```javascript
+	var settings = require('../settings');
+	var Db = require('mongodb').Db;
+	var Connection = require('mongodb').Connection;
+	var Server = require('mongodb').Server;
+	module.exports = new Db(settings.db, new Server(settings.host, Connection.DEFAULT_PORT, {}));
+```
+
+<b>5.6.2 会话支持</b>
+
