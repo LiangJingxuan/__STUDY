@@ -128,3 +128,222 @@ db 是数据库的名称，host 是数据库的地址。cookieSecret 用于 Cook
 
 <b>5.6.2 会话支持</b>
 
+会话是一种持久的网络协议，用于完成服务器和客户端之间的一些交互行为。会话是一个比连接粒度更大的概念，一次会话可能包含多次连接，每次连接都被认为是会话的一次操作。在网络应用开发中，有必要实现会话以帮助用户交互。HTTP 协议是无状态的，本身不支持会话，为了在无状态的 HTTP 协议之上实现会话，Cookie 诞生了。Cookie 是一些存储在客户端的信息，每次连接的时候由浏览器向服务器递交，服务器也向浏览器发起存储 Cookie 的请求，依靠这样的手段服务器可以识别客户端。HTTP 会话功能就是这样实现的。
+
+浏览器首次向服务器发起请求时，服务器生成一个唯一标识符并发送给客户端浏览器，浏览器将这个唯一标识符存储在 Cookie 中，以后每次再发起请求，客户端浏览器都会向服务器传送这个唯一标识符，服务器通过这个唯一标识符来识别用户。
+
+如何通过这个唯一标识符来识别用户，Express 也提供了会话中间件，默认情况下是把用户信息存储在内存中，但我们既然已经有了 MongoDB，不妨把会话信息存储在数据库中，便于持久维护。为了使用这一功能，我们首先要获得一个叫做 connect-mongo 的模块：
+
+>npm install connect-mongo
+
+然后在 app.js，添加以下内容：
+
+```javascript
+	var MongoStore = require('connect-mongo');
+	var settings = require('../settings');
+
+	app.configure(function(){
+		app.set('views', __dirname + '/views');
+		app.set('view engine', 'ejs');
+		app.use(express.bodyParser());
+		app.use(express.methodOverride());
+		app.use(express.cookieParser());
+		app.use(express.session({
+			secret: settings.cookieSecret,
+			store: new MongoStore({
+				db: settings.db
+			})
+		}));
+		app.use(app.router);
+		app.use(express.static(__dirname + '/public'));
+	});
+```
+
+<h3>5.6.3 注册和登入</h3>
+
+1. 注册页面
+创建 views/reg.ejs 文件写注册页面
+
+到目前为止我们所有的路由规则还都写在了 app.js 中，随着规模扩大其维护难度不断提高，因此我们需要把所有的路由规则分离出去。修改 app.js 的 app.configure 部分，用app.use(express.router(routes)) 代替 app.use(app.router)：
+
+```javascript
+	// app.use(app.router);
+	app.use(express.router(routes));
+```
+
+接下来添加 routes/reg.js。
+
+2. 注册响应
+
+在 routes/index.js 中添加 /reg 的 POST 响应函数：
+
+```javascript
+	app.post('/reg', function(req, res) {
+		//检验用户两次输入的口令是否一致
+		if (req.body['password-repeat'] != req.body['password']) {
+			req.flash('error', '两次输入的口令不一致');
+			return res.redirect('/reg');
+		}
+		//生成口令的散列值
+		var md5 = crypto.createHash('md5');
+		var password = md5.update(req.body.password).digest('base64');
+		var newUser = new User({
+			name: req.body.username,
+			password: password,
+		});
+		//检查用户名是否已经存在
+		User.get(newUser.name, function(err, user) {
+			if (user)
+				err = 'Username already exists.';
+			if (err) {
+				req.flash('error', err);
+				return res.redirect('/reg');
+			}
+			//如果不存在则新增用户
+			newUser.save(function(err) {
+				if (err) {
+					req.flash('error', err);
+					return res.redirect('/reg');
+				}
+				req.session.user = newUser;
+				req.flash('success', '注册成功');
+				res.redirect('/');
+			});
+		});
+	});
+```
+
+req.body 就是 POST 请求信息解析过后的对象，例如我们要访问用户传递的password 域的值，只需访问 req.body['password'] 即可。
+req.flash 是 Express 提供的一个奇妙的工具，通过它保存的变量只会在用户当前和下一次的请求中被访问，之后会被清除，通过它我们可以很方便地实现页面的通知和错误信息显示功能。
+res.redirect 是重定向功能，通过它会向用户返回一个 303 See Other 状态，通知浏览器转向相应页面。
+crypto 是 Node.js 的一个核心模块，功能是加密并生成各种散列，使用它之前首先要声明 var crypto = require('crypto')。我们代码中使用它计算了密码的散列值。
+User 是我们设计的用户对象，在后面我们会详细介绍，这里先假设它的接口都是可用的，使用前需要通过 var User = require('../models/user.js') 引用。
+User.get 的功能是通过用户名获取已知用户，在这里我们判断用户名是否已经存在。User.save 可以将用户对象的修改写入数据库。
+通过 req.session.user = newUser 向会话对象写入了当前用户的信息，在后面我们会通过它判断用户是否已经登录。
+
+3. 用户模型
+
+与视图和控制器不同，模型是真正与数据打交道的工具，没有模型，网站就只是一个外壳，不能发挥真实的作用，因此它是框架中最根本的部分。
+在 models 目录中创建 user.js 的文件。
+
+4. 视图交互
+
+为了实现不同登录状态下页面呈现不同内容的功能，我们需要创建动态视图助手，通过它我们才能在视图中访问会话中的用户数据。同时为了显示错误和成功的信息，也要在动态视图助手中增加响应的函数。
+
+5. 登录登出
+
+<b>5.6.4 页面权限控制</b>
+
+防跳墙
+
+```javascript
+	var crypto = require('crypto');
+	var User = require('../models/user.js');
+	module.exports = function(app) {
+	app.get('/', function(req, res) {
+	res.render('index', {
+	title: '首页'
+	});
+	});
+	app.get('/reg', checkNotLogin);
+	app.get('/reg', function(req, res) {
+	res.render('reg', {
+	title: '用户注册',
+	});
+	});
+	app.post('/reg', checkNotLogin);
+	app.post('/reg', function(req, res) {
+	//检验用户两次输入的口令是否一致
+	if (req.body['password-repeat'] != req.body['password']) {
+	req.flash('error', '两次输入的口令不一致');
+	return res.redirect('/reg');
+	}
+	//生成口令的散列值
+	var md5 = crypto.createHash('md5');
+	var password = md5.update(req.body.password).digest('base64');
+	var newUser = new User({
+	name: req.body.username,
+	password: password,
+	});
+	//检查用户名是否已经存在
+	User.get(newUser.name, function(err, user) {
+	if (user)
+	err = 'Username already exists.';
+	if (err) {
+	req.flash('error', err);
+	return res.redirect('/reg');
+	}
+	//如果不存在则新增用户
+	newUser.save(function(err) {
+	if (err) {
+	req.flash('error', err);
+	return res.redirect('/reg');
+	}
+	req.session.user = newUser;
+	req.flash('success', '注册成功');
+	res.redirect('/');
+	});
+	});
+	});
+	app.get('/login', checkNotLogin);
+	app.get('/login', function(req, res) {
+	res.render('login', {
+	title: '用户登入',
+	});
+	});
+	app.post('/login', checkNotLogin);
+	app.post('/login', function(req, res) {
+	//生成口令的散列值
+	var md5 = crypto.createHash('md5');
+	var password = md5.update(req.body.password).digest('base64');
+	User.get(req.body.username, function(err, user) {
+	if (!user) {
+	req.flash('error', '用户不存在');
+	return res.redirect('/login');
+	}
+	if (user.password != password) {
+	req.flash('error', '用户口令错误');
+	return res.redirect('/login');
+	}
+	req.session.user = user;
+	req.flash('success', '登入成功');
+	res.redirect('/');
+	});
+	});
+	app.get('/logout', checkLogin);
+	app.get('/logout', function(req, res) {
+	req.session.user = null;
+	req.flash('success', '登出成功');
+	res.redirect('/');
+	});
+	};
+	function checkLogin(req, res, next) {
+	if (!req.session.user) {
+	req.flash('error', '未登入');
+	return res.redirect('/login');
+	}
+	next();
+	}
+	function checkNotLogin(req, res, next) {
+	if (req.session.user) {
+	req.flash('error', '已登入');
+	return res.redirect('/');
+	}
+	next();
+	}
+```
+
+
+<h3>5.7 发表微博</h3>
+
+<b>5.7.1 微博模型</b>
+
+创建 models/post.js
+
+<b>5.7.2 发表微博</b>
+
+<b>5.7.3 用户页面</b>
+
+<b>5.7.4 首页</b>
+
+<b>5.7.5 下一步</b>
