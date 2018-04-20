@@ -150,7 +150,7 @@ SELECT COUNT(*) AS `num_items`, MIN(`price`) AS `price_min`, MAX(`price`) AS `pi
 
 
 
--- 分组数据
+-- 分组数据 
 
 -- 数据分组
 

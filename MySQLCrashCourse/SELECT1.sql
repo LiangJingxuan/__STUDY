@@ -5,7 +5,7 @@
 -- SHOW COLUMNS FROM food; 显示表结构
 
 
--- SELECT语句
+-- SELECT语句 
 
 -- 检索单个列
 SELECT `title` FROM food;
