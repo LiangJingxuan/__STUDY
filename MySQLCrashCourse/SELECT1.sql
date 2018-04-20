@@ -159,13 +159,3 @@ SELECT * FROM food WHERE `prod_name` REGEXP '[[:digit:]]{4}';
 
 -- 找出以一个数（包括以小数点开始的数）开始的所有产品
 SELECT * FROM food WHERE `prod_name` REGEXP '^[0-9\\.]';
-
-
-
-
-
--- 创建计算字段
-
-
-
-
