@@ -62,7 +62,6 @@ WHERE customers.cust_id=orders.cust_id AND ordertime.order_num=orders.order_num 
 SELECT cust_name,cust_contact FROM customers AS c,orders AS o,ordertime AS oi
 WHERE c.cust_id=o.cust_id AND oi.order_num=o.order_num AND prod_id='TNT2';
 
-
 -- 使用不同类型的联结
 
 -- 自联结
@@ -72,4 +71,61 @@ SELECT p1.prod_id,p1.prod_name FROM products AS p1,products AS p2 WHERE p1.vend_
 SELECT c.*,o.order_num,o.order_date,oi.prod_id,oi.quantity,oi.item_price 
 FROM customers AS c,orders AS o,ordertime AS oi WHERE c.cust_id=o.cust_id AND oi.order_num=o.order_num AND prod_id='FB';
 
--- 外部联结
+-- 外部联结(从左边的表中选择行)
+SELECT customers.cust_id,orders.order_num FROM customers LEFT OUTER JOIN orders ON customers.cust_id=orders.cust_id;
+
+-- 外部联结(从右边的表中选择行)
+SELECT customers.cust_id,orders.order_num FROM customers RIGHT OUTER JOIN orders ON orders.cust_id=customers.cust_id;
+
+-- 使用带聚集函数的联结
+
+-- 检索所有客户及每个客户所下的订单数
+SELECT customers.cust_name,customers.cust_id,COUNT(orders.order_num) AS num_ord FROM customers INNER JOIN orders.cust_id
+GROUP BY customers.cust_id;
+
+--  例2:
+SELECT customers.cust_name,customers.cust_id COUNT(orders.order_num) AS num_ord 
+FROM customers LEFT OUTER JOIN orders ON customers.cust_id=orders.cust_id GROUP BY customers.cust_id;
+
+-- 使用联结和联结条件
+/*
+	注意所使用的联结类型。一般我们使用内部联结，但使用外部联结也是有效的。
+	保证使用正确的联结条件，否则将返回不正确的数据。
+	应该总是提供联结条件，否则会得出笛卡儿积。
+	在一个联结中可以包含多个表，甚至对于每个联结可以采用不同的联结类型。虽然这样做是合法的，一般也很有用，但应该在一起测试它们前，分别测试每个联结。这将使故障排除更为简单。
+*/
+
+
+
+
+-- 组合查询
+
+-- 需要价格小于等于5的所有物品的一个列表，而且还想包括供应商1001和1002生产的所有物品（不考虑价格）
+SELECT vend_id,prod_id,prod_price FROM products WHERE prod_price<=5 
+UNION
+SELECT vend_id,prod_id,prod_price FROM products WHERE vend_id IN (1001,1002);
+
+-- 包含或取消重复的行
+SELECT vend_id,prod_id,prod_price FROM products WHERE prod_price<=5 
+UNION ALL
+SELECT vend_id,prod_id,prod_price FROM products WHERE vend_id IN (1001,1002);
+
+-- 对组合查询结果排序
+SELECT vend_id,prod_id,prod_price FROM products WHERE prod_price<=5 
+UNION
+SELECT vend_id,prod_id,prod_price FROM products WHERE vend_id IN (1001,1002)
+ORDER BY vend_id,prod_id;
+
+
+
+
+-- 全文本搜索
+
+/*
+	在索引之后，使用两个函数Match()和Against()执行全文本搜索，
+	其中Match()指定被搜索的列，Against()指定要使用的搜索表达式。
+*/
+
+SELECT note_text FROM products WHERE MATCH(note_text) AGAINST('rabbit');
+
+
