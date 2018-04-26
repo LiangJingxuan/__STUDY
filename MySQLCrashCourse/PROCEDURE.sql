@@ -190,3 +190,12 @@ CREATE TRIGGER newproduct AFTER INSERT ON products FOR EACH ROW SELECT 'Product 
 DROP TRIGGER newproduct;
 
 -- INSERT触发器
+CREATE TRIGGER mewprde AFTE INSERT ON orders FPR EACH ROW SELECT NEW.order_num;
+
+-- DELETE触发器
+CREATE TRIGGER deleteorder BEFORE DELETE ON orders FOR EACH ROW BEGIN
+	INSERT INTO archive_orders(order_num,order_date,cust_id) VALUES(OLD.order_num,OLD.order_date,OLD.cust_id);
+END;	
+
+-- UPDATE触发器
+CREATE TRIGGER updatevendor BEFOR UPDATE ON vendors FOR EACH ROW SER NEW.vend_state=UPPER(NEW.vend_state);
