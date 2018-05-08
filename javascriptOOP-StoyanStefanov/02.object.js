@@ -56,3 +56,16 @@ copy.howany=2;
 var nullify=function(o){o.howany=0}
 nullify(original);
 // console.log(original.howany); // 0
+
+
+
+/* 对象比较 */
+
+var o1={};
+var o2={};
+
+o1===o2; // false
+o1==o2; // false
+
+var o3=o1;
+o3===o1; // true
