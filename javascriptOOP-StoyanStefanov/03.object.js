@@ -63,5 +63,3 @@ var res2=some_obj.say.apply(my_obj,['Dude']);
 		arguments.callee(++count);
 	}
 })(1);
-
-// Boolean****
