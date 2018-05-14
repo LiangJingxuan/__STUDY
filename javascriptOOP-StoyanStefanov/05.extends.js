@@ -127,3 +127,18 @@ var my=new Triangle(5,10);
 my.getArea(); // 25
 my.toString(); // Triangle
 
+
+
+/* uber 子对象访问父对象的方式 */
+
+/* 将继承部封装成函数 */
+function extend(Child,Parent){
+	var F=function(){};
+	F.prototype=Parent.prototype;
+	Child.prototype=new F();
+	Child.prototype.constructor=Child;
+	Child.uber=Parent.prototype;
+}
+extend(TwoDShape.Shape);
+
+
