@@ -142,3 +142,154 @@ function extend(Child,Parent){
 extend(TwoDShape.Shape);
 
 
+
+/* 对象之间的继承 */
+var o={};
+function extendCopy(p){
+	var c={};
+	for(var i in p){
+		c[i]=p[i];
+	}
+	c.uber=p;
+	return c;
+}
+// 应用
+var shape={
+	name: 'shape',
+	toString: function(){
+		return this.name;
+	}
+}
+
+var towDee=extendCopy(shape);
+towDee.name='2D shape';
+towDee.toString=function(){
+	return this.uber.toString() + ', '+ this.name;
+}
+
+var triangle=extendCopy(towDee);
+triangle.name='Triangle';
+triangle.getArea=function(){
+	return this.side * this.height /2;
+}
+
+triangle.side=5;
+triangle.height=10;
+triangle.getArea(); // 25
+triangle.toString(); // shape 2D shape,Triangle
+
+
+
+/* 深拷贝 */
+function deepCopy(p,c){
+	var c=c||{};
+	for(var i in p){
+		if(typeof p[i]==='object'){
+			c[i]=(p[i].constructor===Array)?[]:{};
+			deepCopy(p[i],c[i])
+		}else{
+			c[i]=p[i]
+		}
+	}
+	return c;
+}
+var parent={
+	numbers: [1,2,3],
+	letters: ['a','b','c'],
+	obj: {
+		prop: 1
+	},
+	bool: true
+}
+
+// 使用
+var mydeep=deepCopy(parent);
+var myshallow=extendCopy(parent);
+
+mydeep.numbers.push(4,5,6); // 6
+mydeep.numbers; // [1,2,3,4,5,6]
+
+parent.numbers; // [1,2,3]
+
+myshallow.numbers.push(10); // 4
+myshallow.numbers; // [1,2,3,10]
+
+parent.numbers; // [1,2,3,10]
+mydeep.numbers; // [1,2,3,4,5,6]
+
+
+
+/* object() */
+// 基于对象之间直接构建继承关系，可以用objcet()函数来接收父对象，并返回一个以该对象为原型的新对象。
+function object(o){
+	function F(){}
+	F.prototype=o;
+	return new F();
+}
+
+// 访问uber属性
+function object(o){
+	var n;
+	function F(){}
+	F.prototype=o;
+	n=new F();
+	n.uber=o;
+	return n;
+}
+
+// 使用
+var triangle=object(towDee);
+triangle.name='Triangle';
+triangle.getArea=function(){
+	return this.side * this.height / 2;
+}
+triangle.toString(); // 'shape 2D shape, Triangle'
+
+
+
+/* 原型继承与属性拷贝的混合应用 */
+function objectPlus(o,stuff){
+	var n;
+	function F(){}
+	F.prototype=o;
+	n=new F();
+	n.uber=o;
+
+	for(var i in stuff){
+		n[i]=stuff[i];
+	}
+	return n;
+}
+var shape={
+	naem: 'shape',
+	toString: function(){
+		return this.name;
+	}
+}
+var towDee=objectPlus(shape,{
+	name: '2D shape',
+	toString: function(){
+		return this.uber.toString()+', '+this.name;
+	}
+});
+var triangle=object(towDee,{
+	name: 'Triangle',
+	getArea: function(){
+		return this.side * this.heigth / 2;
+	},
+	side: 0,
+	heigth: 0
+});
+var my=objectPlus(triangle,{
+	side: 4,
+	height: 4
+});
+my.toString(); // shape,2D shape, Triangle, Triangle
+
+
+
+/* 多重继承 */
+
+/* 寄生式继承 */
+
+/* 构造器借用 */
