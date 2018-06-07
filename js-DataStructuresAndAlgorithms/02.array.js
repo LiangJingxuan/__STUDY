@@ -17,7 +17,26 @@ numbers.splice(5,3,6,6,6,6,6,6); // 从索引5开始删除3个元素，然后从
 console.log(numbers,`长度：${numbers.length}`);
 
 
+// 合并数据 concat
+let arr1=[1,2,3,4],
+	arr2=[5,6,7,8],
+	arr3=[9,10,11,12],
+	arrays=arr1.concat(arr2,arr3);
+
+console.log(arrays);
 
 
-2.6.1 迭代二维数组的元素
-++++++++++++++++++++++++++++++++++++++++++++++++++
+// 排序
+// 在b大于a时，会返回负数，反之则返回正数。如果相等的话，就会返回0。也就是说返回的是负数，就说明a比b小，
+// 这样sort就根据返回值的情况给数组做排序。
+let arrsort=[1,4,2,77,11,10,2,3,54].sort((a,b)=>{
+	return a-b;
+});
+
+console.log('array sort ->',arrsort);
+
+
+
+// 搜索
+arrays.indexOf(11); // 4 返回索引
+arrays.includes(11); // true 返回布尔
